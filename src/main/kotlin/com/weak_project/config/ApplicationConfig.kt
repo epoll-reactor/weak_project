@@ -8,6 +8,7 @@ import io.ktor.server.netty.*
 import com.weak_project.routing.*
 
 fun createApplication(): BaseApplicationEngine {
+    setupDatabaseServer()
     return createServer(Netty)
 }
 
