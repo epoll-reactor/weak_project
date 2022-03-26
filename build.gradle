@@ -47,6 +47,7 @@ dependencies {
     api "org.jetbrains.exposed:exposed:$exposed_version"
     implementation "io.ktor:ktor-html-builder:$ktor_version"
     implementation "io.ktor:ktor-freemarker:$ktor_version"
+    implementation 'org.postgresql:postgresql:42.3.3'
     testCompile "junit:junit:$junit_version"
     testCompile "com.mashape.unirest:unirest-java:$unirest_version"
 }

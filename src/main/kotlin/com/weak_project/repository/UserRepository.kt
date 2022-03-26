@@ -5,34 +5,51 @@ import java.security.MessageDigest
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.*
 
-object Users : LongIdTable() {
+data class User(
+    val username: String,
+    val password: String
+)
+
+internal object Users : LongIdTable("USERS") {
     val username = varchar("username", length = 50).uniqueIndex()
     val password = varchar("password", length = 64)
+
+    fun toDomain(row: ResultRow): User {
+        return User(
+            username = row[username],
+            password = row[password]
+        )
+    }
 }
 
-class UserRepository {
+object UserRepository {
     init {
         transaction {
-            addLogger(StdOutSqlLogger)
             SchemaUtils.create(Users)
         }
     }
 
     fun register(uniqueUsername: String, rawPassword: String) {
-        transaction {
-            addLogger(StdOutSqlLogger)
-            SchemaUtils.create(Users)
-
-            val hashedPassword = hashPassword(rawPassword)
-            Users.insertAndGetId {
-                it[username] = uniqueUsername
-                it[password] = hashedPassword
-            }
-
-            Users.selectAll()
-                .forEach {
-                    println(it)
+        return try {
+            transaction {
+                val hashedPassword = hashPassword(rawPassword)
+                Users.insertAndGetId {
+                    it[username] = uniqueUsername
+                    it[password] = hashedPassword
                 }
+            }
+        } catch (e: Exception) {
+            throw RuntimeException("User $uniqueUsername already registered.")
+        }
+    }
+
+    fun login(username: String, password: String): User? {
+        return transaction {
+            Users
+                .select { Users.username eq username }
+                .map { Users.toDomain(it) }
+                .firstOrNull()
+
         }
     }
 

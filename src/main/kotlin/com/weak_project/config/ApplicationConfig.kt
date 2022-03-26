@@ -5,7 +5,7 @@ import io.ktor.freemarker.*
 import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import com.weak_project.routing.*
+import com.weak_project.routing.login.*
 
 fun createApplication(): BaseApplicationEngine {
     setupDatabaseServer()
@@ -24,7 +24,7 @@ fun createServer(
 }
 
 fun Application.setupRoutes() {
-    routing {
+    install(Routing) {
         loginForm()
         login()
     }
