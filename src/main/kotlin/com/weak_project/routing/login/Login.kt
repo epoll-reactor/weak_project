@@ -6,7 +6,7 @@ import io.ktor.freemarker.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-fun Routing.login() {
+fun Routing.loginRoute() {
     get("/login") {
         val username = call.parameters["username"]!!
         val password = call.parameters["password"]!!
@@ -15,10 +15,12 @@ fun Routing.login() {
         if (user != null) {
             call.respondText("Logged in")
         } else {
-            call.respondText("User $username not found")
+            call.respondText("Wrong username or password")
         }
     }
+}
 
+fun Routing.registerRoute() {
     get("/register") {
         val username = call.parameters["username"]!!
         val password = call.parameters["password"]!!

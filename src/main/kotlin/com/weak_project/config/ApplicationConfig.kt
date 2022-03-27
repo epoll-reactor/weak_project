@@ -25,8 +25,9 @@ fun createServer(
 
 fun Application.setupRoutes() {
     install(Routing) {
-        loginForm()
-        login()
+        rootRoute()
+        loginRoute()
+        registerRoute()
     }
 }
 

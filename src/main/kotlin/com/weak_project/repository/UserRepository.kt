@@ -1,7 +1,7 @@
 package com.weak_project.repository
 
-import org.jetbrains.exposed.dao.LongIdTable
 import java.security.MessageDigest
+import org.jetbrains.exposed.dao.LongIdTable
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.*
 
@@ -10,7 +10,7 @@ data class User(
     val password: String
 )
 
-internal object Users : LongIdTable("USERS") {
+object Users : LongIdTable("USERS") {
     val username = varchar("username", length = 50).uniqueIndex()
     val password = varchar("password", length = 64)
 
@@ -45,8 +45,9 @@ object UserRepository {
 
     fun login(username: String, password: String): User? {
         return transaction {
+            val hashedPassword = hashPassword(password)
             Users
-                .select { Users.username eq username }
+                .select { Users.username eq username and (Users.password eq hashedPassword) }
                 .map { Users.toDomain(it) }
                 .firstOrNull()
 
