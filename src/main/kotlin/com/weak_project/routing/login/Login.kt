@@ -1,5 +1,6 @@
 package com.weak_project.routing.login
 
+import com.weak_project.repository.User
 import com.weak_project.repository.UserRepository
 import io.ktor.application.*
 import io.ktor.freemarker.*
@@ -25,11 +26,16 @@ fun Routing.registerRoute() {
         val username = call.parameters["username"]!!
         val password = call.parameters["password"]!!
 
+        val user = User(username, password)
+
         try {
             UserRepository.register(username, password)
         } catch (e: Exception) {
-            call.respondText(e.message!!)
+            call.respond(FreeMarkerContent(
+                "src/main/resources/files/already_registered.html",
+                mapOf("user" to user), "name"))
         }
+
         call.respondTemplate("src/main/resources/files/registration_form.html")
     }
 
