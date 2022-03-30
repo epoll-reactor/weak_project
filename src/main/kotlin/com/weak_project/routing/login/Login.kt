@@ -6,6 +6,10 @@ import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.routing.*
 
+/**
+ * Try to log in into system. On success goes to user profile,
+ * on failure shows dialog with error message.
+ */
 fun Routing.loginRoute() {
     get("/login") {
         val username = call.parameters["username"]!!
@@ -20,6 +24,10 @@ fun Routing.loginRoute() {
     }
 }
 
+/**
+ * Try to register user. On success goes to account creation form,
+ * on failure shows dialog with error message.
+ */
 fun Routing.registerRoute() {
     get("/register") {
         val username = call.parameters["username"]!!
@@ -27,10 +35,10 @@ fun Routing.registerRoute() {
 
         try {
             UserRepository.register(username, password)
+            call.respondTemplate("src/main/resources/files/registration_form.html")
         } catch (e: Exception) {
             call.respondDialog("User $username already registered")
         }
-        call.respondTemplate("src/main/resources/files/registration_form.html")
     }
 
     get ("/create_account") {

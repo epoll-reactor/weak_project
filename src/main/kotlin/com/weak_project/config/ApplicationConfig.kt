@@ -7,6 +7,9 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import com.weak_project.routing.login.*
 
+/**
+ * Configure all modules and create server.
+ */
 fun createApplication(): BaseApplicationEngine {
     setupDatabaseServer()
     return createServer(Netty)

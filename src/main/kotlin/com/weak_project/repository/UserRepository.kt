@@ -22,6 +22,9 @@ object Users : LongIdTable("USERS") {
     }
 }
 
+/**
+ * Users database handler.
+ */
 object UserRepository {
     init {
         transaction {
@@ -29,6 +32,11 @@ object UserRepository {
         }
     }
 
+    /**
+     * Try to register new user.
+     *
+     * @throws RuntimeException if user already registered.
+     */
     fun register(uniqueUsername: String, rawPassword: String) {
         return try {
             transaction {
@@ -43,6 +51,9 @@ object UserRepository {
         }
     }
 
+    /**
+     * Return user object if found, null otherwise.
+     */
     fun login(username: String, password: String): User? {
         return transaction {
             val hashedPassword = hashPassword(password)

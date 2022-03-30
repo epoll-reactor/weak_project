@@ -11,11 +11,17 @@ data class Dialog(
     val info: String
 )
 
+/**
+ * Shows page with given message.
+ *
+ * @TODO floating (pop-up) window.
+ */
 suspend fun ApplicationCall.respondDialog(message: String) {
     val dialog = Dialog(message)
     respond(
         FreeMarkerContent(
-        "src/main/resources/files/dialog.html",
-        mapOf("dialog" to dialog), "name")
+            "src/main/resources/files/dialog.html",
+            mapOf("dialog" to dialog)
+        )
     )
 }
