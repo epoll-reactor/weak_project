@@ -1,17 +1,19 @@
-package com.weak_project.routing.login
+package com.weak_project.controllers
 
 import com.weak_project.repository.UserRepository
 import com.weak_project.views.respondDialog
 import io.ktor.application.*
 import io.ktor.freemarker.*
-import io.ktor.routing.*
 
 /**
- * Try to log in into system. On success goes to user profile,
- * on failure shows dialog with error message.
+ * Create/access account operations handler.
  */
-fun Routing.loginRoute() {
-    get("/login") {
+class UserController {
+    /**
+     * Try to log in into system. On success goes to user profile,
+     * on failure shows dialog with error message.
+     */
+    suspend fun login(call: ApplicationCall) {
         val username = call.parameters["username"]!!
         val password = call.parameters["password"]!!
 
@@ -22,14 +24,12 @@ fun Routing.loginRoute() {
             call.respondDialog("Wrong username or password")
         }
     }
-}
 
-/**
- * Try to register user. On success goes to account creation form,
- * on failure shows dialog with error message.
- */
-fun Routing.registerRoute() {
-    get("/register") {
+    /**
+     * Try to register user. On success goes to account creation form,
+     * on failure shows dialog with error message.
+     */
+    suspend fun register(call: ApplicationCall) {
         val username = call.parameters["username"]!!
         val password = call.parameters["password"]!!
 
@@ -41,7 +41,7 @@ fun Routing.registerRoute() {
         }
     }
 
-    get ("/create_account") {
+    suspend fun createAccount(call: ApplicationCall) {
         val firstName = call.parameters["first_name"]
         val secondName = call.parameters["second_name"]
 
