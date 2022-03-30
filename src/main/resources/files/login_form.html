@@ -1,78 +1,87 @@
 <!DOCTYPE html>
+<html>
+<head>
 
 <html lang="en">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
-    <title>Registration</title>
-    <style>
+<title>Login</title>
+<style>
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #e1ff87;
-            width: 50%;
-            margin: 0px auto;
-            margin-top: 50px;
-        }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #e1ff87;
+	width: 50%;
+	margin:0px auto;
+	margin-top:50px;
+}
 
-        * {
-            box-sizing: border-box;
-        }
+* {
+    box-sizing: border-box;
+}
 
 
-        .container {
-            padding: 15px;
-            background-color: white;
-        }
+.container {
+    padding: 15px;
+    background-color: white;
+}
 
-        input[type=text], input[type=password] {
-            width: 100%;
-            padding: 15px;
-            margin: 5px 0 22px 0;
-            display: inline-block;
-            border: none;
-            background: #f1f1f1;
-        }
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
 
-        input[type=text]:focus, input[type=password]:focus {
-            background-color: #ddd;
-            outline: none;
-        }
+input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
 
-        hr {
-            border: 1px solid #f1f1f1;
-            margin-bottom: 25px;
-        }
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
 
-        .custom_button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 16px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            opacity: 0.9;
-        }
+.registerbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
 
-        a {
-            color: dodgerblue;
-        }
-    </style>
+a {
+    color: dodgerblue;
+}
+
+
+</style>
 </head>
+<body>
 
-<body style="text-align: center; font-family: sans-serif">
-<h1>Welcome</h1>
-    <div class="container">
-        <form action="/login">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required><br><br>
-            <label for="password">Password:</label>
-            <input type="text" id="password" name="password" required><br><br>
+<form action="/login">
+  <div class="container">
+    <center>  <h1>Welcome</h1>   </center>
+    <hr>
+    <label for="email"><b>Email</b></label>
+	<div class="w-100"></div>
+    <input type="text" placeholder="Enter Email" id="email" name="email" required>
+    <div class="w-100"></div>
+    <label for="psw"><b>Password</b></label>
+	<div class="w-100"></div>
+    <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
 
-            <button type="text" value="Log in" formaction="/login">Login</button>
-            <button type="text" value="Register" formaction="/register">Register</button>
-        </form>
-    </div>
+    <button type="submit" class="registerbtn" formaction="/login">Log in</button>
+    <button type="submit" class="registerbtn" formaction="/register">Register</button>
+  </div>
+  
+</form>
+
 </body>
 </html>
