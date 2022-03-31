@@ -14,12 +14,11 @@ object Users : LongIdTable("USERS") {
     val username = varchar("username", length = 50).uniqueIndex()
     val password = varchar("password", length = 64)
 
-    fun toDomain(row: ResultRow): User {
-        return User(
+    fun toObject(row: ResultRow) =
+        User(
             username = row[username],
             password = row[password]
         )
-    }
 }
 
 /**
@@ -38,7 +37,7 @@ object UserRepository {
      * @throws RuntimeException if user already registered.
      */
     fun register(uniqueUsername: String, rawPassword: String) {
-        return try {
+        try {
             transaction {
                 val hashedPassword = hashPassword(rawPassword)
                 Users.insertAndGetId {
@@ -59,7 +58,7 @@ object UserRepository {
             val hashedPassword = hashPassword(password)
             Users
                 .select { Users.username eq username and (Users.password eq hashedPassword) }
-                .map { Users.toDomain(it) }
+                .map { Users.toObject(it) }
                 .firstOrNull()
 
         }

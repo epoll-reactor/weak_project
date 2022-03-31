@@ -19,13 +19,11 @@ fun createApplication(): BaseApplicationEngine {
 fun createServer(
     engine: ApplicationEngineFactory<BaseApplicationEngine,
             out ApplicationEngine.Configuration>
-): BaseApplicationEngine {
-    return embeddedServer(
+) = embeddedServer(
         engine,
         port = 8080,
         module = Application::mainModule
     )
-}
 
 fun Application.setupRoutes() {
     val userController = UserController()
