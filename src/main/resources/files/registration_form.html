@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registration</title>
     <style>
+
         body {
             font-family: Arial, Helvetica, sans-serif;
             background-color: #e1ff87;
             width: 50%;
-            margin: 50px auto 0;
+            margin:0px auto;
+            margin-top:50px;
         }
 
         * {
@@ -40,7 +42,7 @@
             margin-bottom: 25px;
         }
 
-        .submit_button {
+        .registerbtn {
             background-color: #4CAF50;
             color: white;
             padding: 16px 20px;
@@ -54,18 +56,60 @@
         a {
             color: dodgerblue;
         }
+
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <form action="/create_account">
-            <label for="first_name">First name:</label>
-            <input type="text" id="first_name" name="first_name" required><br><br>
-            <label for="second_name">Second name:</label>
-            <input type="text" id="second_name" name="second_name" required><br><br>
 
-            <button type="text" class="submit_button" id="create_account" formaction="/create_account">Create account</button>
-        </form>
+<form action="/create_account">
+    <div class="container">
+        <center>  <h1> Registration Form</h1> </center>
+        <hr>
+        <label for="first_name"> <b>First name:</b> </label>
+        <input type="text" id ="first_name" name="first_name" placeholder= "Enter your first name" size="15" required />
+
+        <label for="last_name"><b> Last name: </b></label>
+        <input type="text" id ="last_name" name="last_name" placeholder="Enter your last name" size="15"required />
+		
+		<label for="last_name"> <b>Coutry: </b></label>
+        <input type="text" id ="coutry" name="coutry" placeholder="Enter your coutry" size="15"required />
+		
+		<label for="last_name"> <b>City:</b> </label>
+        <input type="text" id ="city" name="city" placeholder="Enter your city" size="15"required />
+		
+		<label for="last_name"> <b>Age:</b> </label>
+        <input type="text" id ="age" name="age" placeholder="DD/MM/YYYY" size="15"required />
+
+        <div>
+
+            <label for="gender">
+                <b>Gender</b> :
+            </label><br>
+            <input type="radio" value="Male" id="gender" name="gender" checked  > Male
+            <input type="radio" value="Female"  name="gender"> Female
+        </div>
+        <br>
+        <label for="phone">
+		
+            <b>Phone</b> :
+        </label>
+        <input type="text" id = "phone" name="phone" placeholder="(+48) xx xxx xx xx" size="10"/>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" id="email" name="email" required>
+
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" id="password" name="password" required>
+
+        <label for="password-repeat"><b>Re-type Password</b></label>
+        <input type="password" placeholder="Retype Password" id="password-repeat" name="password-repeat" required>
+
+        <button type="submit" class="registerbtn" formaction="/create_account">Create account</button>
+
     </div>
+
+</form>
+
 </body>
 </html>
