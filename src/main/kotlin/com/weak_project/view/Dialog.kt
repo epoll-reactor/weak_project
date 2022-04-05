@@ -1,4 +1,4 @@
-package com.weak_project.views
+package com.weak_project.view
 
 import io.ktor.application.*
 import io.ktor.freemarker.*
