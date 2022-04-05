@@ -22,7 +22,8 @@ fun createServer(
 ) = embeddedServer(
         engine,
         port = 8080,
-        module = Application::mainModule
+        module = Application::mainModule,
+        watchPaths = listOf("classes")
     )
 
 fun Application.setupRoutes() {

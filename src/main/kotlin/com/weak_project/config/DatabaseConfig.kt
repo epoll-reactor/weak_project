@@ -1,12 +1,17 @@
 package com.weak_project.config
 
+import io.ktor.util.*
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
 import org.jetbrains.exposed.sql.Database
 
+@OptIn(KtorExperimentalAPI::class)
 fun setupDatabaseServer() {
-    Database.connect(
-        "jdbc:h2:mem:USERS;DB_CLOSE_DELAY=-1;",
-        driver = "org.h2.Driver",
-        user = "root",
-        password = ""
-    )
+    val ds = HikariDataSource(HikariConfig().apply {
+        jdbcUrl = "jdbc:postgresql://localhost:5432/postgres"
+        username = "exposed"
+        password = "exposed"
+        driverClassName = "org.postgresql.Driver"
+    })
+    Database.connect(ds)
 }
