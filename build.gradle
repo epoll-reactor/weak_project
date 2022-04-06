@@ -1,0 +1,55 @@
+group 'io.weak_project'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext {
+        kotlin_version = "1.3.+"
+        slf4j_version = "1.7.25"
+        ktor_version = "1.2.3"
+        kodein_version = "6.1.0"
+        hikaricp_version = "3.3.1"
+        exposed_version = "0.14.1"
+        postgresql_version = "42.3.3"
+        junit_version = "4.12"
+        unirest_version = "1.4.9"
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    api "org.slf4j:slf4j-simple:$slf4j_version"
+    api "io.ktor:ktor-server-netty:$ktor_version"
+    api "io.ktor:ktor-server-cio:$ktor_version"
+    api "io.ktor:ktor-jackson:$ktor_version"
+    api "io.ktor:ktor-auth-jwt:$ktor_version"
+    implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_version"
+    api "com.zaxxer:HikariCP:$hikaricp_version"
+    api "org.jetbrains.exposed:exposed:$exposed_version"
+    implementation "io.ktor:ktor-html-builder:$ktor_version"
+    implementation "io.ktor:ktor-freemarker:$ktor_version"
+    implementation "org.postgresql:postgresql:$postgresql_version"
+    testCompile "junit:junit:$junit_version"
+    testCompile "com.mashape.unirest:unirest-java:$unirest_version"
+}
+
+application {
+    applicationDefaultJvmArgs = ["-Dio.ktor.development=true"]
+}

@@ -7,10 +7,10 @@ plugins {
     kotlin("jvm") version "1.6.10"
 }
 
-group = "com.example"
+group = "weak_project"
 version = "0.0.1"
 application {
-    mainClass.set("com.example.ApplicationKt")
+    mainClass.set("weak_project.Application")
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
@@ -27,6 +27,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-html-builder:1.6.7")
     implementation("io.ktor:ktor-freemarker:1.6.7")
+    implementation("io.ktor:ktor-auth:1.6.7")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }

@@ -1,4 +1,4 @@
-package com.example
+package weak_project
 
 import io.ktor.server.routing.*
 import io.ktor.http.*
