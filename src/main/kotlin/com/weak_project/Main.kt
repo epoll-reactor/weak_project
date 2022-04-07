@@ -1,9 +1,5 @@
 package com.weak_project
 
-import io.ktor.server.engine.*
-import com.weak_project.config.createApplication
+import io.ktor.server.netty.*
 
-@OptIn(EngineAPI::class)
-fun main() {
-    createApplication().start(wait = true)
-}
+fun main(args: Array<String>): Unit = EngineMain.main(args)

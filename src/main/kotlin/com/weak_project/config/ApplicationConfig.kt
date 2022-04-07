@@ -4,28 +4,8 @@ import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
 import io.ktor.routing.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
 import com.weak_project.mvc.user.UserController
 import com.weak_project.mvc.user.installUserRoutes
-
-/**
- * Configure all modules and create server.
- */
-fun createApplication(): BaseApplicationEngine {
-    setupDatabaseServer()
-    return createServer(Netty)
-}
-
-fun createServer(
-    engine: ApplicationEngineFactory<BaseApplicationEngine,
-            out ApplicationEngine.Configuration>
-) = embeddedServer(
-        engine,
-        port = 8080,
-        module = Application::mainModule,
-        watchPaths = listOf("classes")
-    )
 
 fun Application.setupRoutes() {
     val userController = UserController()
@@ -35,8 +15,11 @@ fun Application.setupRoutes() {
     }
 }
 
-fun Application.mainModule() {
+/// This is called through config specification.
+@Suppress("unused")
+fun Application.module() {
     install(FreeMarker)
     install(Authentication)
+    setupDatabaseServer(environment.config)
     setupRoutes()
 }
