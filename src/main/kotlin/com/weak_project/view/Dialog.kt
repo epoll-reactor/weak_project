@@ -20,7 +20,7 @@ suspend fun ApplicationCall.respondDialog(message: String) {
     val dialog = Dialog(message)
     respond(
         FreeMarkerContent(
-            "src/main/resources/files/dialog.html",
+            "src/main/resources/files/Dialog.html",
             mapOf("dialog" to dialog)
         )
     )

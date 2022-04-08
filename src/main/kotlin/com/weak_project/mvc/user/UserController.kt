@@ -19,7 +19,7 @@ class UserController {
 
         val user = UserModel.login(this.username, this.password)
         if (user != null) {
-            call.respondDialog("Here should be user profile.")
+            call.respondTemplate("src/main/kotlin/com/weak_project/mvc/profile/Profile.html")
         } else {
             call.respondDialog("Wrong username or password.")
         }
@@ -33,7 +33,7 @@ class UserController {
         this.username = call.parameters["username"]!!
         this.password = call.parameters["password"]!!
 
-        call.respondTemplate("src/main/kotlin/com/weak_project/mvc/user/registration_form.html")
+        call.respondTemplate("src/main/kotlin/com/weak_project/mvc/user/RegisterForm.html")
     }
 
     suspend fun createAccount(call: ApplicationCall) {
@@ -53,7 +53,7 @@ class UserController {
 }
 
 fun Routing.installUserRoutes(controller: UserController) {
-    get("/") { call.respondTemplate("src/main/kotlin/com/weak_project/mvc/user/login_form.html") }
+    get("/") { call.respondTemplate("src/main/kotlin/com/weak_project/mvc/user/LoginForm.html") }
     get("/login") { controller.login(call) }
     get("/register") { controller.register(call) }
     get ("/create_account") { controller.createAccount(call) }

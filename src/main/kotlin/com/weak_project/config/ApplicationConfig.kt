@@ -1,5 +1,7 @@
 package com.weak_project.config
 
+import com.weak_project.mvc.profile.ProfileController
+import com.weak_project.mvc.profile.installProfileRoutes
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -9,9 +11,11 @@ import com.weak_project.mvc.user.installUserRoutes
 
 fun Application.setupRoutes() {
     val userController = UserController()
+    val profileController = ProfileController()
 
     routing {
         installUserRoutes(userController)
+        installProfileRoutes(profileController)
     }
 }
 

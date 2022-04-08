@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registration</title>
+  <style>
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #e1ff87;
+      width: 50%;
+      margin:0px auto;
+      margin-top:50px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      padding: 15px;
+      background-color: white;
+    }
+
+    input[type=text], input[type=password] {
+      width: 100%;
+      padding: 15px;
+      margin: 5px 0 22px 0;
+      display: inline-block;
+      border: none;
+      background: #f1f1f1;
+    }
+
+    input[type=text]:focus, input[type=password]:focus {
+      background-color: #ddd;
+      outline: none;
+    }
+
+    hr {
+      border: 1px solid #f1f1f1;
+      margin-bottom: 25px;
+    }
+
+    .registerbtn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 16px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      opacity: 0.9;
+    }
+
+    a {
+      color: dodgerblue;
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <form action="/confirm_setup_profile">
+      <center><h1> Edit profile</h1></center>
+
+      <label for="firstName"><b>First name:</b></label>
+      <input type="text" id="firstName" name="firstName" required><br><br>
+
+      <label for="lastName"><b>Last name:</b></label>
+      <input type="text" id="lastName" name="lastName" required><br><br>
+
+      <label for="country"><b>Country:</b></label>
+      <input type="text" id="country" name="country" required><br><br>
+
+      <label for="city"><b>City:</b></label>
+      <input type="text" id="city" name="city" required><br><br>
+
+      <label for="birthDate"><b>Birth date:</b></label>
+      <input type="text" id="birthDate" name="birthDate" required><br><br>
+
+      <div>
+        <label for="gender">
+          <b>Gender</b> :
+        </label><br>
+        <input type="radio" value="Male" id="gender" name="gender" checked> Male
+        <input type="radio" value="Female"  name="gender"> Female
+      </div>
+
+      <label for="phone"><b>Phone:</b></label>
+      <input type="text" id="phone" name="phone" placeholder="(+48)XXX-XXX-XXX" required><br><br>
+
+      <button type="submit" class="submit_button" value="Setup" formaction="/confirm_setup_profile">Setup</button>
+    </form>
+  </div>
+
+</body>
+</html>
