@@ -1,14 +1,17 @@
 package com.weak_project.mvc.profile
 
+import com.weak_project.mvc.user.UserSession
 import com.weak_project.view.respondDialog
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import io.ktor.sessions.*
 
 class ProfileController {
     /// TODO: Decide where to store username.
     suspend fun setupProfile(call: ApplicationCall) {
-        val username = "a" ///< Just for debug.
+        val session = call.sessions.get<UserSession>()!!
+
         val firstName = call.parameters["firstName"]!!
         val lastName = call.parameters["lastName"]!!
         val country = call.parameters["country"]!!
@@ -19,7 +22,7 @@ class ProfileController {
 
         try {
             ProfileModel.setupProfile(
-                username,
+                session.username,
                 firstName,
                 lastName,
                 country,

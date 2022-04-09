@@ -4,10 +4,9 @@ import io.ktor.application.*
 import io.ktor.http.content.*
 import io.ktor.freemarker.*
 import io.ktor.routing.*
-import com.weak_project.mvc.user.UserController
-import com.weak_project.mvc.user.user
-import com.weak_project.mvc.profile.ProfileController
-import com.weak_project.mvc.profile.profile
+import io.ktor.sessions.*
+import com.weak_project.mvc.user.*
+import com.weak_project.mvc.profile.*
 
 fun Application.setupRoutes() {
     val userController = UserController()
@@ -26,6 +25,9 @@ fun Application.setupRoutes() {
 @Suppress("unused")
 fun Application.module() {
     install(FreeMarker)
+    install(Sessions) {
+        cookie<UserSession>("user")
+    }
     setupDatabaseServer(environment.config)
     setupRoutes()
 }

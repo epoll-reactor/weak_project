@@ -7,9 +7,7 @@ import io.ktor.response.*
 /**
  * Dialog view. Used by FreeMarker.
  */
-data class Dialog(
-    val info: String
-)
+data class Dialog(val info: String)
 
 /**
  * Shows page with given message.

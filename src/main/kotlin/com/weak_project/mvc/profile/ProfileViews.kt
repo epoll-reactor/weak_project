@@ -3,9 +3,11 @@ package com.weak_project.mvc.profile
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.response.*
-import com.weak_project.mvc.user.User
+import io.ktor.sessions.*
+import com.weak_project.mvc.user.*
 import com.weak_project.view.respondDialog
 
+/// TODO: Get rid of this boilerplate.
 data class UserView(
     val username: String,
     val password: String,
@@ -30,34 +32,37 @@ fun toUserView(user: User) = UserView(
     phone = user.phone
 )
 
-suspend fun ApplicationCall.respondSettings() {
-    val username = "a" /// Just for debug
-    val user = ProfileModel.getByUsername(username)
-    if (user == null) {
-        respondDialog("Username $username not found")
-        return
-    }
-    val userView = toUserView(user)
-    respond(
-        FreeMarkerContent(
-            "src/main/kotlin/com/weak_project/mvc/profile/ProfileSettings.html",
-            mapOf("user" to userView)
+fun getSessionUser(call: ApplicationCall): UserView {
+    val session = call.sessions.get<UserSession>()!!
+    val user = ProfileModel.getByUsername(session.username)
+        ?: throw RuntimeException("Username ${session.username} not found")
+    return toUserView(user)
+}
+
+suspend fun respondUserTemplate(call: ApplicationCall, template: String) {
+    try {
+        val userView = getSessionUser(call)
+        call.respond(
+            FreeMarkerContent(
+                template,
+                mapOf("user" to userView)
+            )
         )
+    } catch (e: Exception) {
+        call.respondDialog(e.message!!)
+    }
+}
+
+suspend fun ApplicationCall.respondSettings() {
+    respondUserTemplate(
+        this,
+        "src/main/kotlin/com/weak_project/mvc/profile/ProfileSettings.html"
     )
 }
 
 suspend fun ApplicationCall.respondProfile() {
-    val username = "a" /// Just for debug
-    val user = ProfileModel.getByUsername(username)
-    if (user == null) {
-        respondDialog("Username $username not found")
-        return
-    }
-    val userView = toUserView(user)
-    respond(
-        FreeMarkerContent(
-            "src/main/kotlin/com/weak_project/mvc/profile/Profile.html",
-            mapOf("user" to userView)
-        )
+    respondUserTemplate(
+        this,
+        "src/main/kotlin/com/weak_project/mvc/profile/Profile.html"
     )
 }

@@ -2,9 +2,10 @@ package com.weak_project.mvc.user
 
 import io.ktor.application.*
 import io.ktor.routing.*
+import io.ktor.response.*
+import io.ktor.sessions.*
 import com.weak_project.mvc.profile.respondProfile
 import com.weak_project.view.respondDialog
-import io.ktor.response.*
 
 /**
  * Create/access account operations handler.
@@ -20,6 +21,7 @@ class UserController {
 
         val user = UserModel.login(this.username, this.password)
         if (user != null) {
+            call.sessions.set(UserSession(username = username))
             call.respondRedirect("/profile")
         } else {
             call.respondDialog("Wrong username or password.")
@@ -43,6 +45,7 @@ class UserController {
 
         try {
             UserModel.register(username, password, firstName, lastName)
+            call.sessions.set(UserSession(username = username))
             call.respondProfile()
         } catch (e: Exception) {
             call.respondDialog("User $username already registered.")
