@@ -48,29 +48,29 @@
         #real-estates-detail .slides li img {
             height: 450px;
         }
+
+        .edit_button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 25%;
+            alignment: left;
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div id="main">
-
-
         <div class="row" id="real-estates-detail">
             <div class="col-lg-4 col-md-4 col-xs-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <header class="panel-title">
-                            <div class="text-center">
-                                <strong><b>User</b></strong>
-                            </div>
-                        </header>
-                    </div>
                     <div class="panel-body">
                         <div class="text-center" id="author">
-                            <img src="Profile.jpg">
+                            <img src="/static/NoAvatar.png" alt="Avatar" width="256" height="256">
                             <h3><b>${user.firstName} ${user.lastName}</b></h3>
-
                         </div>
                     </div>
                 </div>
@@ -81,8 +81,7 @@
 
                         <ul id="myTab" class="nav nav-pills">
                             <form action="/setup_profile">
-                                <button type="submit" class="active" value="Edit" formaction="/setup_profile">Edit
-                                </button>
+                                <button type="submit" class="edit_button" value="Edit" formaction="/setup_profile">Edit</button>
                             </form>
                         </ul>
 
@@ -92,14 +91,6 @@
                                 <h4>Profile</h4>
                                 <table class="table table-th-block">
                                     <tbody>
-                                    <tr>
-                                        <td class="active">Registered:</td>
-                                        <td>not specified</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="active">Last Activity:</td>
-                                        <td>not specified</td>
-                                    </tr>
                                     <tr>
                                         <td class="active">Country:</td>
                                         <td>${user.country}</td>
@@ -120,7 +111,6 @@
                                         <td class="active">Phone:</td>
                                         <td>${user.phone}</td>
                                     </tr>
-
                                 </table>
                             </div>
                         </div>
@@ -128,9 +118,7 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-
 </body>
 </html>

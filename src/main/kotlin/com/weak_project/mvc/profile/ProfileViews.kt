@@ -31,7 +31,19 @@ fun toUserView(user: User) = UserView(
 )
 
 suspend fun ApplicationCall.respondSettings() {
-    respondTemplate("src/main/kotlin/com/weak_project/mvc/profile/ProfileSettings.html")
+    val username = "a" /// Just for debug
+    val user = ProfileModel.getByUsername(username)
+    if (user == null) {
+        respondDialog("Username $username not found")
+        return
+    }
+    val userView = toUserView(user)
+    respond(
+        FreeMarkerContent(
+            "src/main/kotlin/com/weak_project/mvc/profile/ProfileSettings.html",
+            mapOf("user" to userView)
+        )
+    )
 }
 
 suspend fun ApplicationCall.respondProfile() {

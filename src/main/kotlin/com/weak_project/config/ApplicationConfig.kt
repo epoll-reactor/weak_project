@@ -1,19 +1,23 @@
 package com.weak_project.config
 
-import com.weak_project.mvc.profile.ProfileController
-import com.weak_project.mvc.profile.profile
 import io.ktor.application.*
-import io.ktor.auth.*
+import io.ktor.http.content.*
 import io.ktor.freemarker.*
 import io.ktor.routing.*
 import com.weak_project.mvc.user.UserController
 import com.weak_project.mvc.user.user
+import com.weak_project.mvc.profile.ProfileController
+import com.weak_project.mvc.profile.profile
 
 fun Application.setupRoutes() {
     val userController = UserController()
     val profileController = ProfileController()
 
     routing {
+        static("/static") {
+            resources("files")
+        }
+
         user(userController)
         profile(profileController)
     }

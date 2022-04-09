@@ -4,6 +4,7 @@ import io.ktor.application.*
 import io.ktor.routing.*
 import com.weak_project.mvc.profile.respondProfile
 import com.weak_project.view.respondDialog
+import io.ktor.response.*
 
 /**
  * Create/access account operations handler.
@@ -19,7 +20,7 @@ class UserController {
 
         val user = UserModel.login(this.username, this.password)
         if (user != null) {
-            call.respondProfile()
+            call.respondRedirect("/profile")
         } else {
             call.respondDialog("Wrong username or password.")
         }
