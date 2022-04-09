@@ -1,8 +1,8 @@
 package com.weak_project.mvc.user
 
 import io.ktor.application.*
-import io.ktor.freemarker.*
 import io.ktor.routing.*
+import com.weak_project.mvc.profile.respondProfile
 import com.weak_project.view.respondDialog
 
 /**
@@ -19,7 +19,7 @@ class UserController {
 
         val user = UserModel.login(this.username, this.password)
         if (user != null) {
-            call.respondTemplate("src/main/kotlin/com/weak_project/mvc/profile/Profile.html")
+            call.respondProfile()
         } else {
             call.respondDialog("Wrong username or password.")
         }
@@ -33,7 +33,7 @@ class UserController {
         this.username = call.parameters["username"]!!
         this.password = call.parameters["password"]!!
 
-        call.respondTemplate("src/main/kotlin/com/weak_project/mvc/user/RegisterForm.html")
+        call.respondRegister()
     }
 
     suspend fun createAccount(call: ApplicationCall) {
@@ -42,7 +42,7 @@ class UserController {
 
         try {
             UserModel.register(username, password, firstName, lastName)
-            call.respondDialog("Register OK.")
+            call.respondProfile()
         } catch (e: Exception) {
             call.respondDialog("User $username already registered.")
         }
@@ -52,8 +52,8 @@ class UserController {
     private var password: String = ""
 }
 
-fun Routing.installUserRoutes(controller: UserController) {
-    get("/") { call.respondTemplate("src/main/kotlin/com/weak_project/mvc/user/LoginForm.html") }
+fun Routing.user(controller: UserController) {
+    get("/") { call.respondLogin() }
     get("/login") { controller.login(call) }
     get("/register") { controller.register(call) }
     get ("/create_account") { controller.createAccount(call) }

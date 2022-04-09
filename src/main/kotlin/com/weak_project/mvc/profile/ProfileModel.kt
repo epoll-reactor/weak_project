@@ -4,7 +4,6 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import com.weak_project.mvc.user.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder
 
 object ProfileModel {
     // Table created in UserModel.
@@ -28,10 +27,19 @@ object ProfileModel {
                     it[Users.lastName] = lastName
                     it[Users.country] = country
                     it[Users.city] = city
-                    // birthdate
+                    it[Users.birthDate] = birthDate
                     it[Users.gender] = gender
                     it[Users.phone] = phone
                 }
+        }
+    }
+
+    fun getByUsername(username: String): User? {
+        return transaction {
+            Users
+                .select { Users.username eq username }
+                .map { Users.toObject(it) }
+                .firstOrNull()
         }
     }
 

@@ -12,7 +12,7 @@ data class User(
     var lastName: String,
     var country: String,
     var city: String,
-    // birth_date,
+    var birthDate: String,
     var gender: Int,
     var phone: String
 )
@@ -24,6 +24,7 @@ object Users : LongIdTable("USERS") {
     val lastName = varchar("lastName", length = 64).default("")
     val country = varchar("country", length = 64).default("")
     val city = varchar("city", length = 64).default("")
+    val birthDate = varchar("birthDate", length = 64).default("")
     val gender = integer("gender").default(0) // By standard ISO/IEC 5218.
     val phone = varchar("phone", length = 15).default("")
 
@@ -35,6 +36,7 @@ object Users : LongIdTable("USERS") {
             lastName = row[lastName],
             country = row[country],
             city = row[city],
+            birthDate = row[birthDate],
             gender = row[gender],
             phone = row[phone]
         )
