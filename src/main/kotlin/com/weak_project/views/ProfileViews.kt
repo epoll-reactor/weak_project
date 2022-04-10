@@ -36,7 +36,7 @@ fun toUserView(user: User) = UserView(
 fun getSessionUser(call: ApplicationCall): UserView {
     val session = call.sessions.get<UserSession>()!!
     val user = ProfileModel.getByUsername(session.username)
-        ?: throw RuntimeException("Username ${session.username} not found")
+        ?: throw RuntimeException("Username ${session.username} not found.")
     return toUserView(user)
 }
 

@@ -11,7 +11,11 @@ import com.weak_project.sessions.*
 class ProfileController {
     /// TODO: Decide where to store username.
     suspend fun setupProfile(call: ApplicationCall) {
-        val session = call.sessions.get<UserSession>()!!
+        val session = call.sessions.get<UserSession>()
+        if (session == null) {
+            call.respondErrorDialog("Session does not exist or is expired.")
+            return
+        }
 
         val firstName = call.parameters["firstName"]!!
         val lastName = call.parameters["lastName"]!!
@@ -46,7 +50,7 @@ fun resolveGenderFromString(gender: String): Int {
     return when (gender) {
         "Male" -> 1
         "Female" -> 2
-        else -> throw RuntimeException("Wrong gender")
+        else -> throw RuntimeException("Wrong gender.")
     }
 }
 
@@ -55,7 +59,7 @@ fun resolveGenderFromInt(gender: Int): String {
     return when (gender) {
         1 -> "Male"
         2 -> "Female"
-        else -> throw RuntimeException("Wrong gender code")
+        else -> throw RuntimeException("Wrong gender code.")
     }
 }
 
