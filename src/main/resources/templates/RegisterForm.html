@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Registration</title>
+</head>
+
+<body style="text-align: center; font-family: sans-serif">
+<h1>Welcome</h1>
+<div class="container">
+    <form action="/create_account">
+        <label for="firstName">First name</label>
+        <input type="text" id="firstName" name="firstName" required><br><br>
+
+        <label for="lastName">Last name</label>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+
+        <button type="submit" class="submit_button" value="Register" formaction="/create_account">Create account
+        </button>
+    </form>
+</div>
+</body>
+</html>

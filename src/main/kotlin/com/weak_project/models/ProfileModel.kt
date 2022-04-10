@@ -1,9 +1,8 @@
-package com.weak_project.mvc.profile
+package com.weak_project.models
 
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
-import com.weak_project.mvc.user.*
 
 object ProfileModel {
     // Table created in UserModel.

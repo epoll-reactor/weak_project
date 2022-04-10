@@ -1,11 +1,12 @@
-package com.weak_project.mvc.profile
+package com.weak_project.controllers
 
-import com.weak_project.mvc.user.UserSession
-import com.weak_project.view.respondDialog
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
+import com.weak_project.models.*
+import com.weak_project.views.*
+import com.weak_project.sessions.*
 
 class ProfileController {
     /// TODO: Decide where to store username.
@@ -32,7 +33,7 @@ class ProfileController {
                 phone
             )
         } catch (e: Exception) {
-            call.respondDialog(e.message!!)
+            call.respondErrorDialog(e.message!!)
             return
         }
 
@@ -42,12 +43,20 @@ class ProfileController {
 
 /// By ISO/IEC 5218.
 fun resolveGenderFromString(gender: String): Int {
-    return if (gender == "Male") 1 else 2
+    return when (gender) {
+        "Male" -> 1
+        "Female" -> 2
+        else -> throw RuntimeException("Wrong gender")
+    }
 }
 
 /// By ISO/IEC 5218.
 fun resolveGenderFromInt(gender: Int): String {
-    return if (gender == 1) "Male" else "Female"
+    return when (gender) {
+        1 -> "Male"
+        2 -> "Female"
+        else -> throw RuntimeException("Wrong gender code")
+    }
 }
 
 fun Routing.profile(controller: ProfileController) {

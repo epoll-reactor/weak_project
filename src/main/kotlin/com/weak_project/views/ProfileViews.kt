@@ -1,11 +1,12 @@
-package com.weak_project.mvc.profile
+package com.weak_project.views
 
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.response.*
 import io.ktor.sessions.*
-import com.weak_project.mvc.user.*
-import com.weak_project.view.respondDialog
+import com.weak_project.controllers.resolveGenderFromInt
+import com.weak_project.models.*
+import com.weak_project.sessions.*
 
 /// TODO: Get rid of this boilerplate.
 data class UserView(
@@ -49,20 +50,20 @@ suspend fun respondUserTemplate(call: ApplicationCall, template: String) {
             )
         )
     } catch (e: Exception) {
-        call.respondDialog(e.message!!)
+        call.respondErrorDialog(e.message!!)
     }
 }
 
 suspend fun ApplicationCall.respondSettings() {
     respondUserTemplate(
         this,
-        "src/main/kotlin/com/weak_project/mvc/profile/ProfileSettings.html"
+        "src/main/resources/templates/ProfileSettings.html"
     )
 }
 
 suspend fun ApplicationCall.respondProfile() {
     respondUserTemplate(
         this,
-        "src/main/kotlin/com/weak_project/mvc/profile/Profile.html"
+        "src/main/resources/templates/Profile.html"
     )
 }

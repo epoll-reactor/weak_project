@@ -1,11 +1,12 @@
-package com.weak_project.mvc.user
+package com.weak_project.controllers
 
 import io.ktor.application.*
 import io.ktor.routing.*
 import io.ktor.response.*
 import io.ktor.sessions.*
-import com.weak_project.mvc.profile.respondProfile
-import com.weak_project.view.respondDialog
+import com.weak_project.models.*
+import com.weak_project.views.*
+import com.weak_project.sessions.*
 
 /**
  * Create/access account operations handler.
@@ -24,7 +25,7 @@ class UserController {
             call.sessions.set(UserSession(username = username))
             call.respondRedirect("/profile")
         } else {
-            call.respondDialog("Wrong username or password.")
+            call.respondErrorDialog("Wrong username or password.")
         }
     }
 
@@ -48,7 +49,7 @@ class UserController {
             call.sessions.set(UserSession(username = username))
             call.respondProfile()
         } catch (e: Exception) {
-            call.respondDialog("User $username already registered.")
+            call.respondErrorDialog("User $username already registered.")
         }
     }
 

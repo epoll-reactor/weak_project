@@ -5,8 +5,9 @@ import io.ktor.http.content.*
 import io.ktor.freemarker.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
-import com.weak_project.mvc.user.*
-import com.weak_project.mvc.profile.*
+import com.weak_project.controllers.*
+import com.weak_project.controllers.user
+import com.weak_project.sessions.UserSession
 
 fun Application.setupRoutes() {
     val userController = UserController()
@@ -15,6 +16,7 @@ fun Application.setupRoutes() {
     routing {
         static("/static") {
             resources("files")
+            resources("templates")
         }
 
         user(userController)

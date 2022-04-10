@@ -1,0 +1,19 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #e1ff87;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+ul.nav {
+    padding-top: 30px;
+    background-color: #c42e2e;
+}
+
+ul.nav > li {
+    display: inline-block;
+    padding: 20px 30px;
+}

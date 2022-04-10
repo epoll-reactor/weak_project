@@ -1,4 +1,4 @@
-package com.weak_project.view
+package com.weak_project.views
 
 import io.ktor.application.*
 import io.ktor.freemarker.*
@@ -14,11 +14,11 @@ data class Dialog(val info: String)
  *
  * @TODO floating (pop-up) window.
  */
-suspend fun ApplicationCall.respondDialog(message: String) {
+suspend fun ApplicationCall.respondErrorDialog(message: String) {
     val dialog = Dialog(message)
     respond(
         FreeMarkerContent(
-            "src/main/resources/files/Dialog.html",
+            "src/main/resources/templates/ErrorDialog.html",
             mapOf("dialog" to dialog)
         )
     )

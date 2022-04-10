@@ -1,4 +1,4 @@
-package com.weak_project.mvc.user
+package com.weak_project.models
 
 import java.security.MessageDigest
 import org.jetbrains.exposed.dao.LongIdTable
