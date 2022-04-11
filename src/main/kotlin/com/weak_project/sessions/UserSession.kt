@@ -1,3 +1,6 @@
 package com.weak_project.sessions
 
-data class UserSession(val username: String)
+data class UserSession(
+    val username: String,
+    val employerOrEmployee: Int
+)

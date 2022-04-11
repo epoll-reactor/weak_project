@@ -9,7 +9,6 @@ import com.weak_project.views.*
 import com.weak_project.sessions.*
 
 class ProfileController {
-    /// TODO: Decide where to store username.
     suspend fun setupProfile(call: ApplicationCall) {
         val session = call.sessions.get<UserSession>()
         if (session == null) {
@@ -43,6 +42,20 @@ class ProfileController {
 
         call.respondRedirect("/profile")
     }
+
+    suspend fun respondProfile(call: ApplicationCall) {
+        val session = call.sessions.get<UserSession>()
+        if (session == null) {
+            call.respondErrorDialog("Session does not exist or is expired.")
+            return
+        }
+
+        if (isEmployer(session.employerOrEmployee)) {
+            call.respondErrorDialog("Here should be employer profile...")
+        } else {
+            call.respondEmployeeProfile()
+        }
+    }
 }
 
 /// By ISO/IEC 5218.
@@ -64,7 +77,7 @@ fun resolveGenderFromInt(gender: Int): String {
 }
 
 fun Routing.profile(controller: ProfileController) {
-    get("/profile") { call.respondEmployeeProfile() }
+    get("/profile") { controller.respondProfile(call) }
     get("/setup_profile") { call.respondSettings() }
     get("confirm_setup_profile") { controller.setupProfile(call) }
 }

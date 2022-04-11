@@ -18,6 +18,14 @@
         <label for="lastName">Last name</label>
         <input type="text" id="lastName" name="lastName" required><br><br>
 
+        <div>
+            <label for="employerOrEmployee">
+                <b>Who you are?</b>
+            </label><br>
+            <input type="radio" value="1" id="employerOrEmployee" name="employerOrEmployee" checked> I am looking for a job
+            <input type="radio" value="2" name="employerOrEmployee"> I offer jobs
+        </div>
+
         <button type="submit" class="submit_button" value="Register" formaction="/create_account">Create account
         </button>
     </form>

@@ -22,7 +22,7 @@ class UserController {
 
         val user = UserModel.login(this.username, this.password)
         if (user != null) {
-            call.sessions.set(UserSession(username = username))
+            call.sessions.set(UserSession(username = username, employerOrEmployee = user.employerOrEmployee))
             call.respondRedirect("/profile")
         } else {
             call.respondErrorDialog("Wrong username or password.")
@@ -48,10 +48,11 @@ class UserController {
     suspend fun createAccount(call: ApplicationCall) {
         val firstName = call.parameters["firstName"]!!
         val lastName = call.parameters["lastName"]!!
+        val employerOrEmployee = (call.parameters["employerOrEmployee"]!!).toInt()
 
-        UserModel.register(username, password, firstName, lastName)
-        call.sessions.set(UserSession(username = username))
-        call.respondEmployeeProfile()
+        UserModel.register(username, password, firstName, lastName, employerOrEmployee)
+        call.sessions.set(UserSession(username = username, employerOrEmployee = employerOrEmployee))
+        call.respondRedirect("/profile")
     }
 
     private var username: String = ""

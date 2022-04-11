@@ -14,8 +14,12 @@ data class User(
     var city: String,
     var birthDate: String,
     var gender: Int,
-    var phone: String
+    var phone: String,
+    val employerOrEmployee: Int
 )
+
+fun isEmployee(property: Int): Boolean = property == 1
+fun isEmployer(property: Int): Boolean = property == 2
 
 object Users : LongIdTable("USERS") {
     val username = varchar("username", length = 50).uniqueIndex()
@@ -25,8 +29,9 @@ object Users : LongIdTable("USERS") {
     val country = varchar("country", length = 64).default("")
     val city = varchar("city", length = 64).default("")
     val birthDate = varchar("birthDate", length = 64).default("")
-    val gender = integer("gender").default(0) // By standard ISO/IEC 5218.
+    val gender = integer("gender").default(1) // By standard ISO/IEC 5218.
     val phone = varchar("phone", length = 15).default("")
+    val employerOrEmployee = integer("employerOrEmployee").default(0)
 
     fun toObject(row: ResultRow) =
         User(
@@ -38,7 +43,8 @@ object Users : LongIdTable("USERS") {
             city = row[city],
             birthDate = row[birthDate],
             gender = row[gender],
-            phone = row[phone]
+            phone = row[phone],
+            employerOrEmployee = row[employerOrEmployee]
         )
 }
 
@@ -57,7 +63,13 @@ object UserModel {
      *
      * @throws RuntimeException if user already registered.
      */
-    fun register(uniqueUsername: String, rawPassword: String, firstName_: String, lastName_: String) {
+    fun register(
+        uniqueUsername: String,
+        rawPassword: String,
+        firstName_: String,
+        lastName_: String,
+        employerOrEmployee_: Int
+    ) {
         transaction {
             val hashedPassword = hashPassword(rawPassword)
             Users.insertAndGetId {
@@ -65,6 +77,7 @@ object UserModel {
                 it[password] = hashedPassword
                 it[firstName] = firstName_
                 it[lastName] = lastName_
+                it[employerOrEmployee] = employerOrEmployee_
             }
         }
     }
