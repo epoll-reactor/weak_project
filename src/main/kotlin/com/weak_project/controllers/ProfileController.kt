@@ -64,7 +64,7 @@ fun resolveGenderFromInt(gender: Int): String {
 }
 
 fun Routing.profile(controller: ProfileController) {
-    get("/profile") { call.respondProfile() }
+    get("/profile") { call.respondEmployeeProfile() }
     get("/setup_profile") { call.respondSettings() }
     get("confirm_setup_profile") { controller.setupProfile(call) }
 }

@@ -2,6 +2,10 @@ body {
     background-color: #e1ff87
 }
 
+title {
+    font-weight: bold;
+}
+
 #main {
     background-color: #f2f2f2;
     padding: 20px;

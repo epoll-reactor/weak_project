@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/static/profile.css">
+    <link rel="stylesheet" href="/static/Profile.css">
     <title>Profile</title>
     <br>
 </head>
@@ -24,7 +24,6 @@
                     <div class="panel-body">
                         <div class="text-center" id="author">
                             <img src="/static/NoAvatar.png" alt="Avatar" width="256" height="256">
-                            <h3><b>${user.firstName} ${user.lastName}</b></h3>
                         </div>
                     </div>
                 </div>
@@ -35,7 +34,7 @@
                         <div id="myTabContent" class="tab-content">
                             <hr>
                             <div class="tab-pane fade active in" id="detail">
-                                <h4>Profile</h4>
+                                <h3><b>${user.firstName} ${user.lastName}</b></h3>
                                 <table class="table table-th-block">
                                     <tbody>
                                     <tr>

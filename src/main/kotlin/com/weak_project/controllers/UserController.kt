@@ -51,7 +51,7 @@ class UserController {
 
         UserModel.register(username, password, firstName, lastName)
         call.sessions.set(UserSession(username = username))
-        call.respondProfile()
+        call.respondEmployeeProfile()
     }
 
     private var username: String = ""

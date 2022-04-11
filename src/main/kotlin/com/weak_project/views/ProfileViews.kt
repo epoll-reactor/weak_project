@@ -61,9 +61,9 @@ suspend fun ApplicationCall.respondSettings() {
     )
 }
 
-suspend fun ApplicationCall.respondProfile() {
+suspend fun ApplicationCall.respondEmployeeProfile() {
     respondUserTemplate(
         this,
-        "src/main/resources/templates/Profile.html"
+        "src/main/resources/templates/EmployeeProfile.html"
     )
 }
