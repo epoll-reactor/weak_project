@@ -58,18 +58,14 @@ object UserModel {
      * @throws RuntimeException if user already registered.
      */
     fun register(uniqueUsername: String, rawPassword: String, firstName_: String, lastName_: String) {
-        try {
-            transaction {
-                val hashedPassword = hashPassword(rawPassword)
-                Users.insertAndGetId {
-                    it[username] = uniqueUsername
-                    it[password] = hashedPassword
-                    it[firstName] = firstName_
-                    it[lastName] = lastName_
-                }
+        transaction {
+            val hashedPassword = hashPassword(rawPassword)
+            Users.insertAndGetId {
+                it[username] = uniqueUsername
+                it[password] = hashedPassword
+                it[firstName] = firstName_
+                it[lastName] = lastName_
             }
-        } catch (e: Exception) {
-            throw RuntimeException("User $uniqueUsername already registered.")
         }
     }
 
@@ -85,6 +81,17 @@ object UserModel {
                 .firstOrNull()
 
         }
+    }
+
+    fun userExists(username: String): Boolean {
+        val user = transaction {
+            Users
+                .select { Users.username eq username }
+                .map { Users.toObject(it) }
+                .firstOrNull()
+
+        }
+        return user != null
     }
 
     private fun hashPassword(input: String): String {

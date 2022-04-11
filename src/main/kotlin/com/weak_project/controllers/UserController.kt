@@ -37,6 +37,11 @@ class UserController {
         this.username = call.parameters["username"]!!
         this.password = call.parameters["password"]!!
 
+        if (UserModel.userExists(this.username)) {
+            call.respondErrorDialog("User $username already registered.")
+            return
+        }
+
         call.respondRegister()
     }
 
@@ -44,13 +49,9 @@ class UserController {
         val firstName = call.parameters["firstName"]!!
         val lastName = call.parameters["lastName"]!!
 
-        try {
-            UserModel.register(username, password, firstName, lastName)
-            call.sessions.set(UserSession(username = username))
-            call.respondProfile()
-        } catch (e: Exception) {
-            call.respondErrorDialog("User $username already registered.")
-        }
+        UserModel.register(username, password, firstName, lastName)
+        call.sessions.set(UserSession(username = username))
+        call.respondProfile()
     }
 
     private var username: String = ""
