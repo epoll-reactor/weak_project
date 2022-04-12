@@ -57,13 +57,20 @@ suspend fun respondUserTemplate(call: ApplicationCall, template: String) {
 suspend fun ApplicationCall.respondSettings() {
     respondUserTemplate(
         this,
-        "src/main/resources/templates/ProfileSettings.html"
+        "src/main/resources/templates/Profiles/ProfileSettings.html"
     )
 }
 
 suspend fun ApplicationCall.respondEmployeeProfile() {
     respondUserTemplate(
         this,
-        "src/main/resources/templates/EmployeeProfile.html"
+        "src/main/resources/templates/Profiles/EmployeeProfile.html"
+    )
+}
+
+suspend fun ApplicationCall.respondEmployerProfile() {
+    respondUserTemplate(
+        this,
+        "src/main/resources/templates/Profile/EmployerProfile.html"
     )
 }

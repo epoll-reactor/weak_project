@@ -1,5 +1,5 @@
 body {
-    background-color: #e1ff87
+    background-color: #e3e3e3
 }
 
 title {
@@ -40,8 +40,8 @@ title {
     height: 450px;
 }
 
-.edit_button {
-    background-color: #4CAF50;
+.submit_button {
+    background-color: #afafaf;
     color: white;
     border: none;
     cursor: pointer;
@@ -52,7 +52,7 @@ title {
 
 ul.nav {
     padding-left: 0;
-    background-color: #4CAF50;
+    background-color: #afafaf;
     text-align: center;
     alignment: left;
 }
@@ -61,7 +61,7 @@ ul.nav > li {
     padding: 10px 20px;
 }
 ul.nav > li:hover {
-    background-color: #4CAF50;
+    background-color: #afafaf;
 }
 ul.nav > li > a {
     color: white;

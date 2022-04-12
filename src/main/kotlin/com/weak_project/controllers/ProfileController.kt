@@ -51,7 +51,7 @@ class ProfileController {
         }
 
         if (isEmployer(session.employerOrEmployee)) {
-            call.respondErrorDialog("Here should be employer profile...")
+            call.respondEmployerProfile()
         } else {
             call.respondEmployeeProfile()
         }
@@ -59,22 +59,20 @@ class ProfileController {
 }
 
 /// By ISO/IEC 5218.
-fun resolveGenderFromString(gender: String): Int {
-    return when (gender) {
+fun resolveGenderFromString(gender: String) =
+    when (gender) {
         "Male" -> 1
         "Female" -> 2
         else -> throw RuntimeException("Wrong gender.")
     }
-}
 
 /// By ISO/IEC 5218.
-fun resolveGenderFromInt(gender: Int): String {
-    return when (gender) {
+fun resolveGenderFromInt(gender: Int) =
+    when (gender) {
         1 -> "Male"
         2 -> "Female"
         else -> throw RuntimeException("Wrong gender code.")
     }
-}
 
 fun Routing.profile(controller: ProfileController) {
     get("/profile") { controller.respondProfile(call) }

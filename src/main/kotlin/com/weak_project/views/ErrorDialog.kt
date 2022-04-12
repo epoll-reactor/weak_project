@@ -12,7 +12,7 @@ import io.ktor.response.*
 suspend fun ApplicationCall.respondErrorDialog(message: String) {
     respond(
         FreeMarkerContent(
-            "src/main/resources/templates/ErrorDialog.html",
+            "src/main/resources/templates/Dialogs/ErrorDialog.html",
             mapOf("dialog" to message)
         )
     )

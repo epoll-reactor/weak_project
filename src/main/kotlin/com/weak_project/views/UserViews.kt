@@ -4,9 +4,9 @@ import io.ktor.application.*
 import io.ktor.freemarker.*
 
 suspend fun ApplicationCall.respondLogin() {
-    respondTemplate("src/main/resources/templates/LoginForm.html")
+    respondTemplate("src/main/resources/templates/Forms/LoginForm.html")
 }
 
 suspend fun ApplicationCall.respondRegister() {
-    respondTemplate("src/main/resources/templates/RegisterForm.html")
+    respondTemplate("src/main/resources/templates/Forms/RegisterForm.html")
 }
