@@ -107,7 +107,7 @@ object UserModel {
         return user != null
     }
 
-    private fun hashPassword(input: String): String {
+    fun hashPassword(input: String): String {
         val bytes = input.toByteArray()
         val hash = MessageDigest.getInstance("SHA-256")
         val digest = hash.digest(bytes)

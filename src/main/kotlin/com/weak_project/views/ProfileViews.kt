@@ -71,6 +71,13 @@ suspend fun ApplicationCall.respondEmployeeProfile() {
 suspend fun ApplicationCall.respondEmployerProfile() {
     respondUserTemplate(
         this,
-        "src/main/resources/templates/Profile/EmployerProfile.html"
+        "src/main/resources/templates/Profiles/EmployerProfile.html"
+    )
+}
+
+suspend fun ApplicationCall.respondPasswordChangeForm() {
+    respondUserTemplate(
+        this,
+        "src/main/resources/templates/Profiles/PasswordChangeForm.html"
     )
 }

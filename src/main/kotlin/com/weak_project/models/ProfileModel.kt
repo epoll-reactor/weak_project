@@ -42,6 +42,15 @@ object ProfileModel {
         }
     }
 
+    fun changePassword(username: String, newPassword: String) {
+        transaction {
+            Users
+                .update({ Users.username eq username }) {
+                    it[password] = newPassword
+                }
+        }
+    }
+
     private fun requireUserExists(username: String) {
         transaction {
             Users

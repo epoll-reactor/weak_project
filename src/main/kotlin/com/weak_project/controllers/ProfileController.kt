@@ -56,6 +56,32 @@ class ProfileController {
             call.respondEmployeeProfile()
         }
     }
+
+    suspend fun changePassword(call: ApplicationCall) {
+        val session = call.sessions.get<UserSession>()
+        if (session == null) {
+            call.respondErrorDialog("Session does not exist or is expired.")
+            return
+        }
+
+        val oldPassword = call.parameters["oldPassword"]!!
+        val newPassword = call.parameters["newPassword"]!!
+        val retypedNewPassword = call.parameters["retypedNewPassword"]!!
+
+        if (ProfileModel.getByUsername(session.username)!!.password != UserModel.hashPassword(oldPassword)) {
+            call.respondErrorDialog("Wrong old password.")
+            return
+        }
+
+        if (newPassword != retypedNewPassword) {
+            call.respondErrorDialog("Passwords doesn't match.")
+            return
+        }
+
+        ProfileModel.changePassword(session.username, UserModel.hashPassword(newPassword))
+
+        call.respondRedirect("/profile")
+    }
 }
 
 /// By ISO/IEC 5218.
@@ -77,5 +103,7 @@ fun resolveGenderFromInt(gender: Int) =
 fun Routing.profile(controller: ProfileController) {
     get("/profile") { controller.respondProfile(call) }
     get("/setup_profile") { call.respondSettings() }
-    get("confirm_setup_profile") { controller.setupProfile(call) }
+    get("/setup_password") { call.respondPasswordChangeForm() }
+    get("/confirm_setup_profile") { controller.setupProfile(call) }
+    get("/confirm_change_password") { controller.changePassword(call) }
 }

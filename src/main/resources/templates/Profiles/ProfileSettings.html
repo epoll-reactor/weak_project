@@ -3,27 +3,33 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/Profiles/Profile.css">
     <title>Registration</title>
 </head>
 <body>
 
-<div class="container">
-    <form action="/confirm_setup_profile">
-        <center><h1>Edit profile</h1></center>
+<div class="sidenav">
+    <a href="/setup_profile">General</a>
+    <a href="/setup_password">Privacy</a>
+</div>
 
-        <label for="firstName"><b>First name:</b></label>
+<div class="main" align="left">
+    <form action="/confirm_setup_profile">
+        <h1>Edit profile</h1>
+
+        <label for="firstName"><b>First name</b></label>
         <input type="text" id="firstName" name="firstName" value=${user.firstName} required><br><br>
 
-        <label for="lastName"><b>Last name:</b></label>
+        <label for="lastName"><b>Last name</b></label>
         <input type="text" id="lastName" name="lastName" value=${user.lastName} required><br><br>
 
-        <label for="country"><b>Country:</b></label>
+        <label for="country"><b>Country</b></label>
         <input type="text" id="country" name="country" value=${user.country} required><br><br>
 
-        <label for="city"><b>City:</b></label>
+        <label for="city"><b>City</b></label>
         <input type="text" id="city" name="city" value=${user.city} required><br><br>
 
-        <label for="birthDate"><b>Birth date:</b></label>
+        <label for="birthDate"><b>Birth date</b></label>
         <input type="text" id="birthDate" name="birthDate" value=${user.birthDate} required><br><br>
 
         <div>
