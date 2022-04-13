@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/Style.css">
+    <link rel="stylesheet" href="/static/SideMenu.css">
     <link rel="stylesheet" href="/static/Profiles/Profile.css">
     <title>Registration</title>
 </head>
@@ -11,9 +12,10 @@
 <div class="sidenav">
     <a href="/setup_profile">General</a>
     <a href="/setup_password">Privacy</a>
+    <a class="back" href="/profile">Back</a>
 </div>
 
-<div class="main" align="left">
+<div id="main" align="left">
     <form action="/confirm_setup_profile">
         <h1>Edit profile</h1>
 
@@ -45,7 +47,7 @@
         <label for="phone"><b>Phone:</b></label>
         <input type="text" id="phone" name="phone" placeholder="(+48)XXX-XXX-XXX" value=${user.phone} required><br><br>
 
-        <button type="submit" class="submit_button" value="Setup" formaction="/confirm_setup_profile">Setup</button>
+        <button type="submit" class="submit_button" formaction="/confirm_setup_profile">Setup</button>
     </form>
 </div>
 

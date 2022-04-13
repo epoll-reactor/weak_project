@@ -9,9 +9,9 @@ body {
     box-sizing: border-box;
 }
 
-
 .container {
     padding: 15px;
+    /*position: fixed;*/
     background-color: white;
 }
 
@@ -36,13 +36,18 @@ hr {
 
 .submit_button {
     background-color: #afafaf;
-    color: white;
+    color: black;
     padding: 16px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
     width: 100%;
     opacity: 0.9;
+    font-size: 18px;
+}
+
+.submit_button:hover {
+    color: white;
 }
 
 a {
