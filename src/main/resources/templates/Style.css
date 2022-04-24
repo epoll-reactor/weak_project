@@ -53,3 +53,23 @@ hr {
 a {
     color: dodgerblue;
 }
+
+/* Radio buttons */
+.mdl-radio {
+    display: block;
+    margin: 15px auto;
+}
+
+.mdl-radio, .choose-message-caption {
+    margin: 25px;
+}
+
+.radiobuttons-container {
+    -webkit-column-count: 6;
+    -moz-column-count: 6;
+    column-count: 1;
+
+}
+label.mdl-radio {
+    display:inline-block;
+}

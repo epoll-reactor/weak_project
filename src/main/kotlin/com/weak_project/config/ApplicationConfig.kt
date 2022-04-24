@@ -12,6 +12,7 @@ import com.weak_project.sessions.UserSession
 fun Application.setupRoutes() {
     val userController = UserController()
     val profileController = ProfileController()
+    val employerController = EmployerController()
 
     routing {
         static("/static") {
@@ -21,6 +22,7 @@ fun Application.setupRoutes() {
 
         user(userController)
         profile(profileController)
+        employer(employerController)
     }
 }
 
