@@ -33,19 +33,18 @@ object Users : LongIdTable("USERS") {
     val phone = varchar("phone", length = 15).default("")
     val employerOrEmployee = integer("employerOrEmployee").default(0)
 
-    fun toObject(row: ResultRow) =
-        User(
-            username = row[username],
-            password = row[password],
-            firstName = row[firstName],
-            lastName = row[lastName],
-            country = row[country],
-            city = row[city],
-            birthDate = row[birthDate],
-            gender = row[gender],
-            phone = row[phone],
-            employerOrEmployee = row[employerOrEmployee]
-        )
+    fun toObject(row: ResultRow) = User(
+        username = row[username],
+        password = row[password],
+        firstName = row[firstName],
+        lastName = row[lastName],
+        country = row[country],
+        city = row[city],
+        birthDate = row[birthDate],
+        gender = row[gender],
+        phone = row[phone],
+        employerOrEmployee = row[employerOrEmployee]
+    )
 }
 
 /**
