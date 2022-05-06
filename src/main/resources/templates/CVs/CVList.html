@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/Style.css">
+    <link rel="stylesheet" href="/static/SideMenu.css">
+    <link rel="stylesheet" href="/static/Profiles/Profile.css">
+    <title>CV's</title>
+    <br>
+</head>
+<body>
+
+<div class="sidenav">
+    <a class="back" href="/profile">Back</a>
+</div>
+
+<div class="container">
+    <div class="main">
+        <div class="row" id="real-estates-detail">
+            <div class="panel">
+                <div class="panel-body">
+                    <div id="myTabContent" class="tab-content">
+                        <#list CVs?reverse as CV>
+                            <div>
+                                <p>Key skills: ${CV.keySkills}</p>
+                                <p>Languages: ${CV.spokenLanguages}</p>
+                                <p>Country: ${CV.country}</p>
+                                <p>Education: ${CV.education}</p>
+                            </div>
+                        </#list>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

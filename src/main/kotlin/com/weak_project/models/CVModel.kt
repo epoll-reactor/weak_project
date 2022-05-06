@@ -3,7 +3,6 @@ package com.weak_project.models
 import org.jetbrains.exposed.dao.LongIdTable
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 data class CV(
     val keySkills: String, // Comma-separated list.
@@ -57,31 +56,40 @@ object CVModel {
         languages: String = "",
         theCountry: String = "",
         theEducation: String = ""
-    ): CV? {
+    ): MutableList<CV> {
         return transaction {
-            var query: Op<Boolean> = Op.FALSE
+            val cvsList = mutableListOf<CV>()
 
-            fun makeBranch(column: Column<String>, field: String): Op<Boolean> {
-                if (field.isEmpty())
-                    return query
+            CVs.selectAll().forEach {
+                var condition = false
 
-                return if (query == Op.FALSE) {
-                    OrOp(query, column eq field)
-                } else {
-                    AndOp(query, column eq field)
+                fun makeBranch(column: Column<String>, field: String): Boolean {
+                    if (field.isEmpty())
+                        return condition
+
+                    return if (!condition) {
+                        condition or (it[column] == field)
+                    } else {
+                        condition and (it[column] == field)
+                    }
+                }
+
+                condition = makeBranch(CVs.keySkills, skills)
+                condition = makeBranch(CVs.spokenLanguages, languages)
+                condition = makeBranch(CVs.country, theCountry)
+                condition = makeBranch(CVs.education, theEducation)
+
+                if (condition) {
+                    cvsList.add(CV(
+                        keySkills = it[CVs.keySkills],
+                        spokenLanguages = it[CVs.spokenLanguages],
+                        country = it[CVs.country],
+                        education = it[CVs.education]
+                    ))
                 }
             }
 
-            query = makeBranch(CVs.keySkills, skills)
-            query = makeBranch(CVs.spokenLanguages, languages)
-            query = makeBranch(CVs.country, theCountry)
-            query = makeBranch(CVs.education, theEducation)
-
-            println(query.toString())
-
-            CVs.select { query }
-            .map { CVs.toObject(it) }
-            .firstOrNull()
+            /* return */ cvsList
         }
     }
 }
