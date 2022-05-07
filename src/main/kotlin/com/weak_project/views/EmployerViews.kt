@@ -5,14 +5,16 @@ import io.ktor.freemarker.*
 import io.ktor.response.*
 import com.weak_project.models.CV
 
+internal fun makeCVsPath(template: String) = "src/main/resources/templates/CVs/$template.html"
+
 suspend fun ApplicationCall.respondCVFindDialog() {
-    respondTemplate("src/main/resources/templates/CVs/FindCVsDialog.html")
+    respondTemplate(makeCVsPath("FindCVsDialog"))
 }
 
 suspend fun ApplicationCall.respondCVList(CVs: MutableList<CV>) {
     respond(
         FreeMarkerContent(
-            "src/main/resources/templates/CVs/CVList.html",
+            makeCVsPath("CVList"),
             mapOf("CVs" to CVs)
         )
     )

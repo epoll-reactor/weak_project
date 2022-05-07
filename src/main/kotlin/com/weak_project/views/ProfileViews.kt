@@ -32,12 +32,14 @@ fun toUserView(user: User) = UserView(
     phone = user.phone
 )
 
-fun getSessionUser(call: ApplicationCall): UserView {
+internal fun getSessionUser(call: ApplicationCall): UserView {
     val session = call.sessions.get<User>()!!
     val user = ProfileModel.getByUsername(session.username)
         ?: throw RuntimeException("Username ${session.username} not found.")
     return toUserView(user)
 }
+
+internal fun makeProfilePath(template: String) = "src/main/resources/templates/Profiles/$template.html"
 
 suspend fun respondUserTemplate(call: ApplicationCall, template: String) {
     try {
@@ -54,55 +56,23 @@ suspend fun respondUserTemplate(call: ApplicationCall, template: String) {
 }
 
 suspend fun ApplicationCall.respondSettings() {
-    respondUserTemplate(
-        this,
-        "src/main/resources/templates/Profiles/ProfileSettings.html"
-    )
+    respondUserTemplate(this, makeProfilePath("ProfileSettings"))
 }
 
-suspend fun ApplicationCall.respondEmployerProfile(user: User) {
+suspend fun ApplicationCall.respondProfile(user: User) {
     try {
         respond(
             FreeMarkerContent(
-                "src/main/resources/templates/Profiles/EmployerProfile.html",
-                mapOf("user" to user)
+                makeProfilePath(
+                    if (isEmployee(user.employerOrEmployee)) "EmployeeProfile" else "EmployerProfile"
+                ), mapOf("user" to user)
             )
         )
     } catch (e: Exception) {
         respondErrorDialog(e.message!!)
     }
-}
-
-suspend fun ApplicationCall.respondEmployeeProfile(user: User) {
-    try {
-        respond(
-            FreeMarkerContent(
-                "src/main/resources/templates/Profiles/EmployeeProfile.html",
-                mapOf("user" to user)
-            )
-        )
-    } catch (e: Exception) {
-        respondErrorDialog(e.message!!)
-    }
-}
-
-suspend fun ApplicationCall.respondEmployeeProfile() {
-    respondUserTemplate(
-        this,
-        "src/main/resources/templates/Profiles/EmployeeProfile.html"
-    )
-}
-
-suspend fun ApplicationCall.respondEmployerProfile() {
-    respondUserTemplate(
-        this,
-        "src/main/resources/templates/Profiles/EmployerProfile.html"
-    )
 }
 
 suspend fun ApplicationCall.respondPasswordChangeForm() {
-    respondUserTemplate(
-        this,
-        "src/main/resources/templates/Profiles/PasswordChangeForm.html"
-    )
+    respondUserTemplate(this, makeProfilePath("PasswordChangeForm"))
 }

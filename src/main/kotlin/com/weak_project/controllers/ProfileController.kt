@@ -45,26 +45,7 @@ class ProfileController {
 
     suspend fun respondProfileByUsername(call: ApplicationCall, username: String) {
         val user = UserModel.getByUsername(username)
-
-        if (isEmployee(user.employerOrEmployee)) {
-            call.respondEmployeeProfile(user)
-        } else {
-            call.respondEmployerProfile(user)
-        }
-    }
-
-    suspend fun respondSessionProfile(call: ApplicationCall) {
-        val session = call.sessions.get<User>()
-        if (session == null) {
-            call.respondErrorDialog("Session does not exist or is expired.")
-            return
-        }
-
-        if (isEmployer(session.employerOrEmployee)) {
-            call.respondEmployerProfile()
-        } else {
-            call.respondEmployeeProfile()
-        }
+        call.respondProfile(user)
     }
 
     suspend fun changePassword(call: ApplicationCall) {
@@ -111,7 +92,6 @@ fun resolveGenderFromInt(gender: Int) =
     }
 
 fun Routing.profile(controller: ProfileController) {
-    get("/profile") { controller.respondSessionProfile(call) }
     get("/profile/{username}") {
         val username = call.parameters.getOrFail<String>("username").toString()
         controller.respondProfileByUsername(call, username)
