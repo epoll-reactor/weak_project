@@ -8,7 +8,8 @@ data class CV(
     val keySkills: String, // Comma-separated list.
     val spokenLanguages: String, // Comma-separated list.
     val country: String,
-    val education: String
+    val education: String,
+    val ownerId: String
 )
 
 object CVs : LongIdTable("CVS") {
@@ -16,12 +17,14 @@ object CVs : LongIdTable("CVS") {
     val spokenLanguages = varchar("spokenLanguages", length = 1024)
     val country = varchar("country", length = 64)
     val education = varchar("education", length = 64)
+    val ownerId = (varchar("ownerId", length = 50) references Users.username)
 
     fun toObject(row: ResultRow) = CV(
         keySkills = row[keySkills],
         spokenLanguages = row[spokenLanguages],
         country = row[country],
-        education = row[education]
+        education = row[education],
+        ownerId = row[ownerId]
     )
 }
 
@@ -36,6 +39,7 @@ object CVModel {
     }
 
     fun insert(
+        owner: String,
         skills: String,
         languages: String,
         theCountry: String,
@@ -47,6 +51,7 @@ object CVModel {
                 it[spokenLanguages] = languages
                 it[country] = theCountry
                 it[education] = theEducation
+                it[ownerId] = owner
             }
         }
     }
@@ -84,7 +89,8 @@ object CVModel {
                         keySkills = it[CVs.keySkills],
                         spokenLanguages = it[CVs.spokenLanguages],
                         country = it[CVs.country],
-                        education = it[CVs.education]
+                        education = it[CVs.education],
+                        ownerId = it[CVs.ownerId]
                     ))
                 }
             }

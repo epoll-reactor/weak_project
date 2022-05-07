@@ -1,14 +1,11 @@
 package com.weak_project.controllers
 
-import com.weak_project.models.CV
 import com.weak_project.models.CVModel
 import com.weak_project.views.respondCVFindDialog
 import com.weak_project.views.respondCVList
 import com.weak_project.views.respondErrorDialog
 import io.ktor.application.*
-import io.ktor.response.*
 import io.ktor.routing.*
-
 
 class EmployerController {
     suspend fun findCVs(call: ApplicationCall) {
@@ -29,19 +26,6 @@ class EmployerController {
         } else {
             call.respondCVList(cvsList)
         }
-
-//        val cv: CV? = CVModel.getBy(
-//            skills = keySkillsList,
-//            languages = spokenLanguagesList,
-//            theCountry = country,
-//            theEducation = education
-//        )
-//
-//        if (cv != null) {
-//            call.respondCVList(mutableListOf(cv))
-//        } else {
-//            call.respondErrorDialog("CV not found")
-//        }
     }
 }
 
