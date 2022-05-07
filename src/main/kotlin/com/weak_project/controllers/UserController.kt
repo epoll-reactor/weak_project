@@ -6,7 +6,6 @@ import io.ktor.response.*
 import io.ktor.sessions.*
 import com.weak_project.models.*
 import com.weak_project.views.*
-import com.weak_project.sessions.*
 
 /**
  * Create/access account operations handler.
@@ -22,8 +21,8 @@ class UserController {
 
         val user = UserModel.login(this.username, this.password)
         if (user != null) {
-            call.sessions.set(UserSession(username = username, employerOrEmployee = user.employerOrEmployee))
-            call.respondRedirect("/profile")
+            call.sessions.set(user)
+            call.respondRedirect("/profile/${username}")
         } else {
             call.respondErrorDialog("Wrong username or password.")
         }
@@ -51,8 +50,21 @@ class UserController {
         val employerOrEmployee = (call.parameters["employerOrEmployee"]!!).toInt()
 
         UserModel.register(username, password, firstName, lastName, employerOrEmployee)
-        call.sessions.set(UserSession(username = username, employerOrEmployee = employerOrEmployee))
-        call.respondRedirect("/profile")
+        call.sessions.set(
+            User(
+                username = "",
+                password = "",
+                firstName = "",
+                lastName = "",
+                country = "",
+                city = "",
+                birthDate = "",
+                gender = 1,
+                phone = "",
+                employerOrEmployee = employerOrEmployee
+            )
+        )
+        call.respondRedirect("/profile/${username}")
     }
 
     private var username: String = ""

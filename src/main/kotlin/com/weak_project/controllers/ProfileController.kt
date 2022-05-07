@@ -4,13 +4,13 @@ import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
+import io.ktor.util.*
 import com.weak_project.models.*
 import com.weak_project.views.*
-import com.weak_project.sessions.*
 
 class ProfileController {
     suspend fun setupProfile(call: ApplicationCall) {
-        val session = call.sessions.get<UserSession>()
+        val session = call.sessions.get<User>()
         if (session == null) {
             call.respondErrorDialog("Session does not exist or is expired.")
             return
@@ -40,11 +40,21 @@ class ProfileController {
             return
         }
 
-        call.respondRedirect("/profile")
+        call.respondRedirect("/profile/${session.username}")
     }
 
-    suspend fun respondProfile(call: ApplicationCall) {
-        val session = call.sessions.get<UserSession>()
+    suspend fun respondProfileByUsername(call: ApplicationCall, username: String) {
+        val user = UserModel.getByUsername(username)
+
+        if (isEmployee(user.employerOrEmployee)) {
+            call.respondEmployeeProfile(user)
+        } else {
+            call.respondEmployerProfile(user)
+        }
+    }
+
+    suspend fun respondSessionProfile(call: ApplicationCall) {
+        val session = call.sessions.get<User>()
         if (session == null) {
             call.respondErrorDialog("Session does not exist or is expired.")
             return
@@ -58,7 +68,7 @@ class ProfileController {
     }
 
     suspend fun changePassword(call: ApplicationCall) {
-        val session = call.sessions.get<UserSession>()
+        val session = call.sessions.get<User>()
         if (session == null) {
             call.respondErrorDialog("Session does not exist or is expired.")
             return
@@ -80,7 +90,7 @@ class ProfileController {
 
         ProfileModel.changePassword(session.username, UserModel.hashPassword(newPassword))
 
-        call.respondRedirect("/profile")
+        call.respondRedirect("/profile/${session.username}")
     }
 }
 
@@ -101,7 +111,11 @@ fun resolveGenderFromInt(gender: Int) =
     }
 
 fun Routing.profile(controller: ProfileController) {
-    get("/profile") { controller.respondProfile(call) }
+    get("/profile") { controller.respondSessionProfile(call) }
+    get("/profile/{username}") {
+        val username = call.parameters.getOrFail<String>("username").toString()
+        controller.respondProfileByUsername(call, username)
+    }
     get("/setup_profile") { call.respondSettings() }
     get("/setup_password") { call.respondPasswordChangeForm() }
     get("/confirm_setup_profile") { controller.setupProfile(call) }

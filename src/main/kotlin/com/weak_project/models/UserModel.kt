@@ -95,6 +95,15 @@ object UserModel {
         }
     }
 
+    fun getByUsername(username: String): User {
+        return transaction {
+            Users
+                .select { Users.username eq username }
+                .map { Users.toObject(it) }
+                .first()
+        }
+    }
+
     fun userExists(username: String): Boolean {
         val user = transaction {
             Users

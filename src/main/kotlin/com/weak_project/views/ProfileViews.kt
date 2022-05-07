@@ -6,7 +6,6 @@ import io.ktor.response.*
 import io.ktor.sessions.*
 import com.weak_project.controllers.resolveGenderFromInt
 import com.weak_project.models.*
-import com.weak_project.sessions.*
 
 /// TODO: Get rid of this boilerplate.
 data class UserView(
@@ -34,7 +33,7 @@ fun toUserView(user: User) = UserView(
 )
 
 fun getSessionUser(call: ApplicationCall): UserView {
-    val session = call.sessions.get<UserSession>()!!
+    val session = call.sessions.get<User>()!!
     val user = ProfileModel.getByUsername(session.username)
         ?: throw RuntimeException("Username ${session.username} not found.")
     return toUserView(user)
@@ -59,6 +58,32 @@ suspend fun ApplicationCall.respondSettings() {
         this,
         "src/main/resources/templates/Profiles/ProfileSettings.html"
     )
+}
+
+suspend fun ApplicationCall.respondEmployerProfile(user: User) {
+    try {
+        respond(
+            FreeMarkerContent(
+                "src/main/resources/templates/Profiles/EmployerProfile.html",
+                mapOf("user" to user)
+            )
+        )
+    } catch (e: Exception) {
+        respondErrorDialog(e.message!!)
+    }
+}
+
+suspend fun ApplicationCall.respondEmployeeProfile(user: User) {
+    try {
+        respond(
+            FreeMarkerContent(
+                "src/main/resources/templates/Profiles/EmployeeProfile.html",
+                mapOf("user" to user)
+            )
+        )
+    } catch (e: Exception) {
+        respondErrorDialog(e.message!!)
+    }
 }
 
 suspend fun ApplicationCall.respondEmployeeProfile() {

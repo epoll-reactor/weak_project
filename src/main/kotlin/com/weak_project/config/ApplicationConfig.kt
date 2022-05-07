@@ -7,7 +7,7 @@ import io.ktor.routing.*
 import io.ktor.sessions.*
 import com.weak_project.controllers.*
 import com.weak_project.controllers.user
-import com.weak_project.sessions.UserSession
+import com.weak_project.models.User
 
 fun Application.setupRoutes() {
     val userController = UserController()
@@ -30,7 +30,7 @@ fun Application.setupRoutes() {
 fun Application.module() {
     install(FreeMarker)
     install(Sessions) {
-        cookie<UserSession>("user")
+        cookie<User>("user")
     }
     setupDatabaseServer(environment.config)
     setupRoutes()

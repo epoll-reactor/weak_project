@@ -2,8 +2,8 @@ package com.weak_project.views
 
 import io.ktor.application.*
 import io.ktor.freemarker.*
-import com.weak_project.models.CV
 import io.ktor.response.*
+import com.weak_project.models.CV
 
 suspend fun ApplicationCall.respondCVFindDialog() {
     respondTemplate("src/main/resources/templates/CVs/FindCVsDialog.html")

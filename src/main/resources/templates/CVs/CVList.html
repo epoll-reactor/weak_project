@@ -26,9 +26,9 @@
                         <br>
                         <#list CVs?reverse as CV>
                             <div class="cvsList">
-                                <form action="/profile">
+                                <form action="/profile/${CV.ownerId}">
                                     <h2><b>${CV.ownerId}</b>, most skilled in ${CV.keySkills}</h2>
-                                    <button type="submit" class="submit_button" href="/profile">Open</button>
+                                    <button type="submit" class="submit_button" href="/profile/${CV.ownerId}">Open</button>
                                 </form>
                             </div>
                         </#list>
