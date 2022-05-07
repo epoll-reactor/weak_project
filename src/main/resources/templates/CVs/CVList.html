@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/static/Style.css">
     <link rel="stylesheet" href="/static/SideMenu.css">
     <link rel="stylesheet" href="/static/Profiles/Profile.css">
+    <link rel="stylesheet" href="/static/CVs/CVList.css">
     <title>CV's</title>
     <br>
 </head>
@@ -20,13 +21,15 @@
             <div class="panel">
                 <div class="panel-body">
                     <div id="myTabContent" class="tab-content">
+                        <h1><b>Search results</b></h1>
+                        <br>
+                        <br>
                         <#list CVs?reverse as CV>
-                            <div class="table table-th-block">
-                                <p>Owner: ${CV.ownerId}</p>
-                                <p>Key skills: ${CV.keySkills}</p>
-                                <p>Languages: ${CV.spokenLanguages}</p>
-                                <p>Country: ${CV.country}</p>
-                                <p>Education: ${CV.education}</p>
+                            <div class="cvsList">
+                                <form action="/profile">
+                                    <h2><b>${CV.ownerId}</b>, most skilled in ${CV.keySkills}</h2>
+                                    <button type="submit" class="submit_button" href="/profile">Open</button>
+                                </form>
                             </div>
                         </#list>
                     </div>
