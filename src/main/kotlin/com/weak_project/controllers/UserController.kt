@@ -22,7 +22,7 @@ class UserController {
         val user = UserModel.login(this.username, this.password)
         if (user != null) {
             call.sessions.set(user)
-            call.respondRedirect("/profile/${username}")
+            call.respondRedirect("/profile/id${user.id}")
         } else {
             call.respondErrorDialog("Wrong username or password.")
         }
@@ -49,13 +49,14 @@ class UserController {
         val lastName = call.parameters["lastName"]!!
         val employerOrEmployee = (call.parameters["employerOrEmployee"]!!).toInt()
 
-        UserModel.register(username, password, firstName, lastName, employerOrEmployee)
+        val id = UserModel.register(username, password, firstName, lastName, employerOrEmployee)
         call.sessions.set(
             User(
-                username = "",
+                id = id,
+                username = username,
                 password = "",
-                firstName = "",
-                lastName = "",
+                firstName = firstName,
+                lastName = lastName,
                 country = "",
                 city = "",
                 birthDate = "",
@@ -64,7 +65,7 @@ class UserController {
                 employerOrEmployee = employerOrEmployee
             )
         )
-        call.respondRedirect("/profile/${username}")
+        call.respondRedirect("/profile/id${id}")
     }
 
     private var username: String = ""

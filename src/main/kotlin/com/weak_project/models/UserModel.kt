@@ -1,11 +1,11 @@
 package com.weak_project.models
 
 import java.security.MessageDigest
-import org.jetbrains.exposed.dao.LongIdTable
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.*
 
 data class User(
+    val id: Int,
     val username: String,
     val password: String,
     var firstName: String,
@@ -21,7 +21,8 @@ data class User(
 fun isEmployee(property: Int): Boolean = property == 1
 fun isEmployer(property: Int): Boolean = property == 2
 
-object Users : LongIdTable("USERS") {
+object Users : Table("USERS") {
+    val id = integer("id").autoIncrement()
     val username = varchar("username", length = 50).uniqueIndex()
     val password = varchar("password", length = 64)
     val firstName = varchar("firstName", length = 64).default("")
@@ -34,6 +35,7 @@ object Users : LongIdTable("USERS") {
     val employerOrEmployee = integer("employerOrEmployee").default(0)
 
     fun toObject(row: ResultRow) = User(
+        id = row[id],
         username = row[username],
         password = row[password],
         firstName = row[firstName],
@@ -61,6 +63,7 @@ object UserModel {
      * Try to register new user.
      *
      * @throws RuntimeException if user already registered.
+     * @return user id.
      */
     fun register(
         uniqueUsername: String,
@@ -68,16 +71,16 @@ object UserModel {
         firstName_: String,
         lastName_: String,
         employerOrEmployee_: Int
-    ) {
-        transaction {
+    ): Int {
+        return transaction {
             val hashedPassword = hashPassword(rawPassword)
-            Users.insertAndGetId {
+            Users.insert {
                 it[username] = uniqueUsername
                 it[password] = hashedPassword
                 it[firstName] = firstName_
                 it[lastName] = lastName_
                 it[employerOrEmployee] = employerOrEmployee_
-            }
+            } get Users.id
         }
     }
 
@@ -95,10 +98,10 @@ object UserModel {
         }
     }
 
-    fun getByUsername(username: String): User {
+    fun getById(id: Int): User {
         return transaction {
             Users
-                .select { Users.username eq username }
+                .select { Users.id eq id }
                 .map { Users.toObject(it) }
                 .first()
         }

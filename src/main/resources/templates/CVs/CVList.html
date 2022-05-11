@@ -26,9 +26,10 @@
                         <br>
                         <#list CVs?reverse as CV>
                             <div class="cvsList">
-                                <form action="/profile/${CV.ownerId}">
+                                <form action="/profile/id${CV.ownerId}">
                                     <h2><b>${CV.ownerId}</b>, most skilled in ${CV.keySkills}</h2>
-                                    <button type="submit" class="submit_button" href="/profile/${CV.ownerId}">Open</button>
+                                    <!-- TODO: Make transition directly to CV (that not exists yet), not to profile. -->
+                                    <button type="submit" class="submit_button" href="/profile/id${CV.ownerId}">Open</button>
                                 </form>
                             </div>
                         </#list>

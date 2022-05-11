@@ -40,11 +40,11 @@ class ProfileController {
             return
         }
 
-        call.respondRedirect("/profile/${session.username}")
+        call.respondRedirect("/profile/id${session.username}")
     }
 
-    suspend fun respondProfileByUsername(call: ApplicationCall, username: String) {
-        val user = UserModel.getByUsername(username)
+    suspend fun respondProfileById(call: ApplicationCall, id: Int) {
+        val user = UserModel.getById(id)
         call.respondProfile(user)
     }
 
@@ -71,7 +71,7 @@ class ProfileController {
 
         ProfileModel.changePassword(session.username, UserModel.hashPassword(newPassword))
 
-        call.respondRedirect("/profile/${session.username}")
+        call.respondRedirect("/profile/id${session.username}")
     }
 }
 
@@ -92,9 +92,9 @@ fun resolveGenderFromInt(gender: Int) =
     }
 
 fun Routing.profile(controller: ProfileController) {
-    get("/profile/{username}") {
-        val username = call.parameters.getOrFail<String>("username").toString()
-        controller.respondProfileByUsername(call, username)
+    get("/profile/id{id}") {
+        val id = call.parameters.getOrFail<Int>("id").toInt()
+        controller.respondProfileById(call, id)
     }
     get("/setup_profile") { call.respondSettings() }
     get("/setup_password") { call.respondPasswordChangeForm() }

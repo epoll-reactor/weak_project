@@ -1,5 +1,6 @@
 package com.weak_project.models
 
+import com.weak_project.models.Users.autoIncrement
 import org.jetbrains.exposed.dao.LongIdTable
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.*
@@ -9,15 +10,16 @@ data class CV(
     val spokenLanguages: String, // Comma-separated list.
     val country: String,
     val education: String,
-    val ownerId: String
+    val ownerId: Int
 )
 
-object CVs : LongIdTable("CVS") {
+object CVs : Table("CVS") {
+    val id = integer("id").autoIncrement()
     val keySkills = varchar("keySkills", length = 1024)
     val spokenLanguages = varchar("spokenLanguages", length = 1024)
     val country = varchar("country", length = 64)
     val education = varchar("education", length = 64)
-    val ownerId = (varchar("ownerId", length = 50) references Users.username)
+    val ownerId = integer("ownerId") references Users.id
 
     fun toObject(row: ResultRow) = CV(
         keySkills = row[keySkills],
@@ -39,7 +41,7 @@ object CVModel {
     }
 
     fun insert(
-        owner: String,
+        owner: Int,
         skills: String,
         languages: String,
         theCountry: String,
@@ -85,13 +87,15 @@ object CVModel {
                 condition = makeBranch(CVs.education, theEducation)
 
                 if (condition) {
-                    cvsList.add(CV(
-                        keySkills = it[CVs.keySkills],
-                        spokenLanguages = it[CVs.spokenLanguages],
-                        country = it[CVs.country],
-                        education = it[CVs.education],
-                        ownerId = it[CVs.ownerId]
-                    ))
+                    cvsList.add(
+                        CV(
+                            keySkills = it[CVs.keySkills],
+                            spokenLanguages = it[CVs.spokenLanguages],
+                            country = it[CVs.country],
+                            education = it[CVs.education],
+                            ownerId = it[CVs.ownerId]
+                        )
+                    )
                 }
             }
 
