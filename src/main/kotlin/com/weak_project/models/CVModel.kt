@@ -1,7 +1,5 @@
 package com.weak_project.models
 
-import com.weak_project.models.Users.autoIncrement
-import org.jetbrains.exposed.dao.LongIdTable
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.*
 
@@ -87,15 +85,7 @@ object CVModel {
                 condition = makeBranch(CVs.education, theEducation)
 
                 if (condition) {
-                    cvsList.add(
-                        CV(
-                            keySkills = it[CVs.keySkills],
-                            spokenLanguages = it[CVs.spokenLanguages],
-                            country = it[CVs.country],
-                            education = it[CVs.education],
-                            ownerId = it[CVs.ownerId]
-                        )
-                    )
+                    cvsList.add(CVs.toObject(it))
                 }
             }
 

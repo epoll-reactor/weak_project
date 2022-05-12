@@ -3,6 +3,7 @@ package com.weak_project.models
 import java.security.MessageDigest
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.*
+import java.io.File
 
 data class User(
     val id: Int,
@@ -33,6 +34,7 @@ object Users : Table("USERS") {
     val gender = integer("gender").default(1) // By standard ISO/IEC 5218.
     val phone = varchar("phone", length = 15).default("")
     val employerOrEmployee = integer("employerOrEmployee").default(0)
+    val avatar = binary("avatar", 1024 * 1024).default(byteArrayOf()).nullable()
 
     fun toObject(row: ResultRow) = User(
         id = row[id],
@@ -116,6 +118,25 @@ object UserModel {
 
         }
         return user != null
+    }
+
+    fun updateAvatar(username: String, path: String) {
+        val bytes = File(path).readBytes()
+        transaction {
+            Users
+                .update ({ Users.username eq username }) {
+                    it[avatar] = bytes
+                }
+        }
+    }
+
+    fun getAvatar(username: String): ByteArray? {
+        return transaction {
+            Users
+                .select { Users.username eq username }
+                .map { it[Users.avatar] }
+                .firstOrNull()
+        }
     }
 
     fun hashPassword(input: String): String {

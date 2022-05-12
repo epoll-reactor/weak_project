@@ -68,6 +68,18 @@ class UserController {
         call.respondRedirect("/profile/id${id}")
     }
 
+    suspend fun updateAvatar(call: ApplicationCall) {
+        val session = call.sessions.get<User>()
+        if (session == null) {
+            call.respondErrorDialog("Session does not exist or is expired.")
+            return
+        }
+
+        UserModel.updateAvatar(session.username, "/home/machen/media/pics/BASH_COLORS.png")
+
+        call.respondRedirect("/profile/id${session.id}")
+    }
+
     private var username: String = ""
     private var password: String = ""
 }
@@ -77,4 +89,5 @@ fun Routing.user(controller: UserController) {
     get("/login") { controller.login(call) }
     get("/register") { controller.register(call) }
     get ("/create_account") { controller.createAccount(call) }
+    get("/update_avatar") { controller.updateAvatar(call) }
 }
