@@ -36,6 +36,9 @@ fun toUserView(user: User) = UserView(
     avatarPath = ""
 )
 
+/**
+ * Get current user loaded to session.
+ */
 internal suspend fun getSessionUser(call: ApplicationCall): UserView? {
     val session = call.sessions.get<User>()
     if (session == null) {
@@ -48,6 +51,10 @@ internal suspend fun getSessionUser(call: ApplicationCall): UserView? {
     return toUserView(user)
 }
 
+/**
+ * Setup profile picture by following rule: if user has avatar in database, it has
+ * set as profile picture to render; otherwise default avatar is set.
+ */
 internal fun resolveAvatar(view: UserView) {
     val avatar = UserModel.getAvatar(view.username)
     if (avatar != null) {
@@ -62,12 +69,7 @@ internal fun resolveAvatar(view: UserView) {
     }
 }
 
-internal suspend fun getUserView(call: ApplicationCall, user: User): UserView? {
-    val session = call.sessions.get<User>()
-    if (session == null) {
-        call.respondErrorDialog("Session not exists or expired")
-        return null
-    }
+internal fun getUserView(user: User): UserView? {
     val view = toUserView(user)
     resolveAvatar(view)
     return view
@@ -99,7 +101,7 @@ suspend fun ApplicationCall.respondProfile(user: User) {
             FreeMarkerContent(
                 makeProfilePath(
                     if (isEmployee(user.employerOrEmployee)) "EmployeeProfile" else "EmployerProfile"
-                ), mapOf("user" to getUserView(this, user))
+                ), mapOf("user" to getUserView(user))
             )
         )
     } catch (e: Exception) {
