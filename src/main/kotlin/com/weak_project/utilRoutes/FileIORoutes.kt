@@ -14,7 +14,7 @@ fun Routing.fileIO() {
         call.receiveMultipart().forEachPart { part ->
             if (part is PartData.FileItem) {
                 val name = part.originalFileName!!
-                val file = File("$name")
+                val file = File(name)
 
                 part.streamProvider().use { its ->
                     file.outputStream().buffered().use {
@@ -30,7 +30,7 @@ fun Routing.fileIO() {
     get("/{filename}") {
         val filename = call.parameters["filename"]!!
         println("Downloading $filename")
-        val file = File("$filename")
+        val file = File(filename)
         if (file.exists())
             call.respondFile(file)
         call.respond(HttpStatusCode.NotFound)
