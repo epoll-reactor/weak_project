@@ -40,7 +40,7 @@ class ProfileController {
             return
         }
 
-        call.respondRedirect("/profile/id${session.username}")
+        call.respondRedirect("/profile/id${session.id}")
     }
 
     suspend fun respondProfileById(call: ApplicationCall, id: Int) {
