@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/Style.css">
+    <link rel="stylesheet" href="/static/SideMenu.css">
+    <link rel="stylesheet" href="/static/Profiles/Profile.css">
+    <link rel="stylesheet" href="/static/CVs/CVList.css">
+    <title>CV's</title>
+    <br>
+</head>
+<body>
+
+<div class="sidenav">
+    <a class="back" href="/profile">Back</a>
+</div>
+
+<div class="container">
+    <div class="main">
+        <div>
+            <div class="panel">
+                <div class="panel-body">
+                    <div id="myTabContent" class="tab-content">
+                        <h1><b>Messages</b></h1>
+                        <br>
+                        <br>
+                        <#list messagesViews?reverse as messageView>
+                        <div class="cvsList">
+                            <form action="/profile/id${messageView.to}">
+                                <div class="col-lg-1 col-md-8">
+                                    <div class="row" id="real-estates-detail">
+                                        <div class="text-center" id="author">
+                                        <img src=${messageView.avatarPath} alt="Avatar" width="64" height="64">
+                                        </div>
+                                    </div>
+                                </div>
+                                <h1><b>${messageView.to}</b></h1>
+                                <button type="submit" class="submit_button" href="/profile/id${messageView.to}">Open</button>
+                            </form>
+                        </div>
+                    </#list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

@@ -139,6 +139,15 @@ object UserModel {
         }
     }
 
+    fun getAvatar(id: Int): ByteArray? {
+        return transaction {
+            Users
+                .select { Users.id eq id }
+                .map { it[Users.avatar] }
+                .firstOrNull()
+        }
+    }
+
     fun hashPassword(input: String): String {
         val bytes = input.toByteArray()
         val hash = MessageDigest.getInstance("SHA-256")
