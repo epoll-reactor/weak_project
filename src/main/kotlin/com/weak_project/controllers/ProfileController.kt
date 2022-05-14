@@ -9,6 +9,12 @@ import com.weak_project.models.*
 import com.weak_project.views.*
 
 class ProfileController {
+    private fun validateBirthDate(date: String) =
+        """^\d{1,2}/\d{1,2}/[1,2]\d{3}$""".toRegex().containsMatchIn(date)
+
+    private fun validatePhoneNumber(phoneNumber: String) =
+        """^(\+\d{2,3})?((\d{9})|(\d{3}[\-]){2}\d{3})$""".toRegex().containsMatchIn(phoneNumber)
+
     suspend fun setupProfile(call: ApplicationCall) {
         val session = call.sessions.get<User>()
         if (session == null) {
@@ -23,6 +29,16 @@ class ProfileController {
         val birthDate = call.parameters["birthDate"]!!
         val gender = resolveGenderFromString(call.parameters["gender"]!!)
         val phone = call.parameters["phone"]!!
+
+        if (!validateBirthDate(birthDate)) {
+            call.respondErrorDialog("Invalid birth date: $birthDate")
+            return
+        }
+
+        if (!validatePhoneNumber(phone)) {
+            call.respondErrorDialog("Invalid phone number: $phone")
+            return
+        }
 
         try {
             ProfileModel.setupProfile(
