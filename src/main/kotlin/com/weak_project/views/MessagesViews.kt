@@ -11,6 +11,7 @@ data class MessageView(
     val text: String,
     val from: String,
     val to: String,
+    val toId: Int,
     val timestamp: Long,
     var avatarPath: String
 )
@@ -28,6 +29,7 @@ suspend fun ApplicationCall.respondMessagesList(messages: MutableList<Message>) 
            text = message.text,
            from = fromUser.username,
            to = toUser.firstName + " " + toUser.lastName,
+           toId = toUser.id,
            timestamp = message.timestamp,
            avatarPath = ""
        )

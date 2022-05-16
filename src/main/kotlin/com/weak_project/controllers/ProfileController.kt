@@ -116,16 +116,10 @@ fun Routing.profile(controller: ProfileController) {
     get("/setup_password") { call.respondPasswordChangeForm() }
     get("/confirm_setup_profile") { controller.setupProfile(call) }
     get("/confirm_change_password") { controller.changePassword(call) }
-    get("/messages") {
+    get("/messages/id{id}") {
+        val id = call.parameters.getOrFail<Int>("id").toInt()
         call.respondMessagesList(
-            mutableListOf(
-                Message(
-                    text = "123",
-                    from = 1,
-                    to = 1,
-                    timestamp = 111222
-                )
-            )
+            MessagesModel.getDialogList(id)
         )
     }
 }

@@ -48,5 +48,20 @@ object MessagesModel {
         }
     }
 
+    /**
+     * Get list of dialogs where the id is participant.
+     */
+    fun getDialogList(id: Int): MutableList<Message> {
+        return transaction {
+            val dialogList = mutableListOf<Message>()
 
+            Messages.selectAll().forEach { message ->
+                if (message[Messages.from] == id) {
+                    dialogList += Messages.toObject(message)
+                }
+            }
+
+            /* return */ dialogList
+        }
+    }
 }
