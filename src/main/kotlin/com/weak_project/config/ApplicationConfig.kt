@@ -14,6 +14,7 @@ fun Application.setupRoutes() {
     val userController = UserController()
     val profileController = ProfileController()
     val employerController = EmployerController()
+    val messagesController = MessagesController()
 
     routing {
         static("/static") {
@@ -25,6 +26,7 @@ fun Application.setupRoutes() {
         user(userController)
         profile(profileController)
         employer(employerController)
+        messages(messagesController)
     }
 }
 

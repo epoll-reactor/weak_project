@@ -116,10 +116,4 @@ fun Routing.profile(controller: ProfileController) {
     get("/setup_password") { call.respondPasswordChangeForm() }
     get("/confirm_setup_profile") { controller.setupProfile(call) }
     get("/confirm_change_password") { controller.changePassword(call) }
-    get("/messages/id{id}") {
-        val id = call.parameters.getOrFail<Int>("id").toInt()
-        call.respondMessagesList(
-            MessagesModel.getDialogList(id)
-        )
-    }
 }

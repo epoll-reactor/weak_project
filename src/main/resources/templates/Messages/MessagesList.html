@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/static/SideMenu.css">
     <link rel="stylesheet" href="/static/Profiles/Profile.css">
     <link rel="stylesheet" href="/static/CVs/CVList.css">
-    <title>CV's</title>
+    <title>Messages</title>
     <br>
 </head>
 <body>
@@ -26,7 +26,7 @@
                         <br>
                         <#list messagesViews?reverse as messageView>
                         <div class="cvsList">
-                            <form action="/profile/id${messageView.toId}">
+                            <form action="/dialog/id${messageView.toId}">
                                 <div class="col-lg-1 col-md-8">
                                     <div class="row" id="real-estates-detail">
                                         <div class="text-center" id="author">
@@ -35,7 +35,7 @@
                                     </div>
                                 </div>
                                 <h1><b>${messageView.to}</b></h1>
-                                <button type="submit" class="submit_button" href="/profile/id${messageView.toId}">Open</button>
+                                <button type="submit" class="submit_button" href="/dialog/id${messageView.toId}">Open</button>
                             </form>
                         </div>
                     </#list>

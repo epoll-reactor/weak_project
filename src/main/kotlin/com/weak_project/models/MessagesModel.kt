@@ -61,6 +61,24 @@ object MessagesModel {
                 }
             }
 
+            dialogList.sortBy { it.timestamp }
+
+            /* return */ dialogList
+        }
+    }
+
+    fun getPrivateDialog(user1: Int, user2: Int): MutableList<Message> {
+        return transaction {
+            val dialogList = mutableListOf<Message>()
+
+            Messages.selectAll().forEach { message ->
+                if ((message[Messages.from] == user1) and (message[Messages.to] == user2)) {
+                    dialogList += Messages.toObject(message)
+                }
+            }
+
+            dialogList.sortBy { it.timestamp }
+
             /* return */ dialogList
         }
     }

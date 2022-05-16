@@ -1,0 +1,50 @@
+<!--
+    Mappings:
+        messages  - text
+                  - from
+                  - to
+                  - timestamp
+
+        companion - text
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/Style.css">
+    <link rel="stylesheet" href="/static/SideMenu.css">
+    <link rel="stylesheet" href="/static/Profiles/Profile.css">
+    <link rel="stylesheet" href="/static/Messages/Dialog.css">
+    <title>Dialog</title>
+    <br>
+</head>
+<body>
+
+<div class="sidenav">
+    <a class="back" href="/profile">Back</a>
+</div>
+
+<div class="container">
+    <div class="main">
+        <div>
+            <div class="panel">
+                <div class="panel-body">
+                    <div id="myTabContent" class="tab-content">
+                        <h1><b>Dialog with ${companion}</b></h1>
+                        <br>
+                        <br>
+                        <#list messages?reverse as message>
+                        <div class="cvsList">
+                            <form action="/dialog/id${message.to}">
+                                <h1><b>${message.text}</b></h1>
+                            </form>
+                        </div>
+                        </#list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
