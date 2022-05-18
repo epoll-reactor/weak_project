@@ -12,7 +12,6 @@ suspend fun uploadFile(call: ApplicationCall, targetFilename: String): String {
         if (part is PartData.FileItem) {
             val ext = File(part.originalFileName!!).extension
             targetFile = "$targetFilename.$ext"
-            println("Target file: $targetFile")
             val file = File("build/resources/main/files/", targetFile)
             part.streamProvider().use { its -> file.outputStream().buffered().use { its.copyTo(it) } }
         }
