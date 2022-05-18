@@ -23,6 +23,11 @@
                         <div class="text-center" id="author">
                             <img src=${user.avatarPath} alt="Avatar" width="256" height="256">
                         </div>
+
+                        <form method="post" enctype="multipart/form-data" action="/uploadAvatar">
+                            <input class="custom_file_upload" type="file" id="file" name="file" accept=".png,.jpg">
+                            <button type="submit" class="submit_button">Update photo</button>
+                        </form>
                     </div>
                 </div>
             </div>
