@@ -62,7 +62,7 @@ internal fun resolveAvatar(view: UserView) {
     val avatar = UserModel.getAvatar(view.username)
     if (avatar != null) {
         view.avatarPath = "/static/avatar${view.id}.png"
-        val realAvatarPath = "src/main/resources/files/avatar${view.id}.png"
+        val realAvatarPath = "build/resources/main/files/avatar${view.id}.png"
         val file = File(realAvatarPath)
         if (!file.exists()) {
             file.writeBytes(avatar)

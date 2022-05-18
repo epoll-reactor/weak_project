@@ -37,7 +37,7 @@ suspend fun ApplicationCall.respondMessagesList(messages: MutableList<Message>) 
        val avatar = UserModel.getAvatar(message.to)
        if (avatar != null) {
            view.avatarPath = "/static/avatar${message.to}.png"
-           val realAvatarPath = "src/main/resources/files/avatar${message.to}.png"
+           val realAvatarPath = "build/resources/main/files/avatar${message.to}.png"
            val file = File(realAvatarPath)
            if (!file.exists()) {
                file.writeBytes(avatar)
