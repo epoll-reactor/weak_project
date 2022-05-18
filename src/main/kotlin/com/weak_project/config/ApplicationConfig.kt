@@ -8,7 +8,6 @@ import io.ktor.sessions.*
 import com.weak_project.controllers.*
 import com.weak_project.controllers.user
 import com.weak_project.models.User
-import com.weak_project.utilRoutes.fileIO
 
 fun Application.setupRoutes() {
     val userController = UserController()
@@ -22,7 +21,6 @@ fun Application.setupRoutes() {
             resources("templates")
         }
 
-        fileIO()
         user(userController)
         profile(profileController)
         employer(employerController)

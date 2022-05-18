@@ -1,5 +1,6 @@
 package com.weak_project.controllers
 
+import com.weak_project.IO.uploadFile
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
@@ -7,6 +8,16 @@ import io.ktor.sessions.*
 import io.ktor.util.*
 import com.weak_project.models.*
 import com.weak_project.views.*
+import io.ktor.client.*
+import kotlinx.coroutines.runBlocking
+import java.io.File
+import io.ktor.client.request.forms.*
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.response.*
+import io.ktor.http.*
+import io.ktor.http.content.*
+import io.ktor.request.*
+import kotlinx.html.InputType
 
 class ProfileController {
     private fun validateBirthDate(date: String) =
@@ -89,6 +100,22 @@ class ProfileController {
 
         call.respondRedirect("/profile/id${session.username}")
     }
+
+    suspend fun uploadAvatar(call: ApplicationCall) {
+        val session = call.sessions.get<User>()
+        if (session == null) {
+            call.respondErrorDialog("Session does not exists or expired.")
+            return
+        }
+
+        val uploadedPath = uploadFile(call, "avatarToUpload${session.id}")
+
+        UserModel.updateAvatar(session.username, uploadedPath)
+
+        File(uploadedPath).delete()
+
+        call.respondRedirect("/profile/id${session.id}")
+    }
 }
 
 /// By ISO/IEC 5218.
@@ -116,4 +143,5 @@ fun Routing.profile(controller: ProfileController) {
     get("/setup_password") { call.respondPasswordChangeForm() }
     get("/confirm_setup_profile") { controller.setupProfile(call) }
     get("/confirm_change_password") { controller.changePassword(call) }
+    post("/uploadAvatar") { controller.uploadAvatar(call) }
 }

@@ -24,6 +24,15 @@
                         <div class="text-center" id="author">
                             <img src=${user.avatarPath} alt="Avatar" width="256" height="256">
                         </div>
+
+                        <form method="post" enctype="multipart/form-data" action="/uploadAvatar">
+                            <div>
+                                <input type="file" id="file" name="file" accept=".png,.jpg">
+                            </div>
+                            <div>
+                                <button>Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -33,6 +42,7 @@
                         <div id="myTabContent" class="tab-content">
                             <div class="tab-pane fade active in" id="detail">
                                 <h3><b>${user.firstName} ${user.lastName}</b></h3>
+
                                 <table class="table table-th-block">
                                     <tbody>
                                     <tr>
