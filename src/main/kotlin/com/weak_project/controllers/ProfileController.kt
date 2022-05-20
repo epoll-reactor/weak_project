@@ -29,7 +29,7 @@ class ProfileController {
     suspend fun setupProfile(call: ApplicationCall) {
         val session = call.sessions.get<User>()
         if (session == null) {
-            call.respondErrorDialog("Session does not exist or is expired.")
+            call.respondLogin()
             return
         }
 
@@ -78,7 +78,7 @@ class ProfileController {
     suspend fun changePassword(call: ApplicationCall) {
         val session = call.sessions.get<User>()
         if (session == null) {
-            call.respondErrorDialog("Session does not exist or is expired.")
+            call.respondLogin()
             return
         }
 
@@ -104,7 +104,7 @@ class ProfileController {
     suspend fun uploadAvatar(call: ApplicationCall) {
         val session = call.sessions.get<User>()
         if (session == null) {
-            call.respondErrorDialog("Session does not exists or expired.")
+            call.respondLogin()
             return
         }
 

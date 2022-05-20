@@ -42,7 +42,7 @@ fun toUserView(user: User) = UserView(
 internal suspend fun getSessionUser(call: ApplicationCall): UserView? {
     val session = call.sessions.get<User>()
     if (session == null) {
-        call.respondErrorDialog("Session not exists or expired")
+        call.respondLogin()
         return null
     }
     // Get full info about user.

@@ -19,7 +19,7 @@ class MessagesController {
     suspend fun respondPrivateDialog(call: ApplicationCall) {
         val session = call.sessions.get<User>()
         if (session == null) {
-            call.respondErrorDialog("Session does not exist or is expired.")
+            call.respondLogin()
             return
         }
         val user1 = session.id
@@ -31,7 +31,7 @@ class MessagesController {
     suspend fun sendMessage(call: ApplicationCall) {
         val session = call.sessions.get<User>()
         if (session == null) {
-            call.respondErrorDialog("Session does not exist or is expired.")
+            call.respondLogin()
             return
         }
 
