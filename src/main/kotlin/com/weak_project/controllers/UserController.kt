@@ -44,6 +44,9 @@ class UserController {
         call.respondRegister()
     }
 
+    /**
+     * The account creation logic itself.
+     */
     suspend fun createAccount(call: ApplicationCall) {
         val firstName = call.parameters["firstName"]!!
         val lastName = call.parameters["lastName"]!!

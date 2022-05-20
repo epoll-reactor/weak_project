@@ -19,6 +19,9 @@ internal fun parseTimestamp(timestamp: Long): String {
 
 internal fun makeDialogPath(template: String) = "src/main/resources/templates/Messages/$template.html"
 
+/**
+ * Show dialog between two users.
+ */
 suspend fun ApplicationCall.respondPrivateDialog(user1: Int, user2: Int) {
     val messages = MessagesModel.getPrivateDialog(user1, user2)
     val companion = UserModel.getById(user2)

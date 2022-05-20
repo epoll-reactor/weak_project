@@ -22,7 +22,7 @@ data class UserView(
     var avatarPath: String
 )
 
-fun toUserView(user: User) = UserView(
+internal fun toUserView(user: User) = UserView(
     id = user.id,
     username = user.username,
     password = user.password,
@@ -76,6 +76,9 @@ internal fun resolveAvatar(view: UserView) {
     }
 }
 
+/**
+ * Create the view for user (with proper avatar or its placeholder).
+ */
 internal fun getUserView(user: User): UserView {
     val view = toUserView(user)
     resolveAvatar(view)
@@ -98,7 +101,12 @@ suspend fun ApplicationCall.respondProfile(user: User) {
     }
 }
 
-suspend fun respondUserTemplate(call: ApplicationCall, template: String) {
+suspend fun ApplicationCall.respondProfileById(id: Int) {
+    val user = UserModel.getById(id)
+    respondProfile(user)
+}
+
+internal suspend fun respondUserTemplate(call: ApplicationCall, template: String) {
     try {
         val userView = getSessionUser(call) ?: return
         call.respond(

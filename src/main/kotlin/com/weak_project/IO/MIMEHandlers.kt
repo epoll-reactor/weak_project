@@ -5,6 +5,9 @@ import io.ktor.http.content.*
 import io.ktor.request.*
 import java.io.File
 
+/**
+ * Save file MIME part(s) to disk. All other part types are ignored.
+ */
 suspend fun uploadFile(call: ApplicationCall, targetFilename: String): String {
     var targetFile = ""
 

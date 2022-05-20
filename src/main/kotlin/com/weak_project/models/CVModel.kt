@@ -56,6 +56,10 @@ object CVModel {
         }
     }
 
+    /**
+     * Get the list of CV's. All parameters are optional and can be
+     * used separately.
+     */
     fun getBy(
         skills: String = "",
         languages: String = "",

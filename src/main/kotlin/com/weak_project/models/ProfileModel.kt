@@ -7,6 +7,16 @@ import org.jetbrains.exposed.sql.update
 object ProfileModel {
     // Table created in UserModel.
 
+    private fun requireUserExists(username: String) {
+        transaction {
+            Users
+                .select { Users.username eq username }
+                .map { Users.toObject(it) }
+                .firstOrNull()
+
+        } ?: throw RuntimeException("User $username not found.")
+    }
+
     fun setupProfile(
         username: String,
         firstName: String,
@@ -49,15 +59,5 @@ object ProfileModel {
                     it[password] = newPassword
                 }
         }
-    }
-
-    private fun requireUserExists(username: String) {
-        transaction {
-            Users
-                .select { Users.username eq username }
-                .map { Users.toObject(it) }
-                .firstOrNull()
-
-        } ?: throw RuntimeException("User $username not found.")
     }
 }

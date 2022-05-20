@@ -22,6 +22,7 @@ class MessagesController {
             call.respondLogin()
             return
         }
+
         val user1 = session.id
         val user2 = call.parameters.getOrFail<Int>("id").toInt()
 
@@ -42,7 +43,7 @@ class MessagesController {
             text_ = text,
             from_ = session.id,
             to_ = toId,
-            timestamp_ = System.currentTimeMillis() / 1000
+            timestamp_ = System.currentTimeMillis() / 1000 // Cut milliseconds to seconds.
         )
 
         respondPrivateDialog(call)

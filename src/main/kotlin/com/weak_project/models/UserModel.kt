@@ -19,7 +19,9 @@ data class User(
     val employerOrEmployee: Int
 )
 
+@Suppress("unused")
 fun isEmployee(property: Int): Boolean = property == 1
+@Suppress("unused")
 fun isEmployer(property: Int): Boolean = property == 2
 
 object Users : Table("USERS") {
@@ -63,9 +65,6 @@ object UserModel {
 
     /**
      * Try to register new user.
-     *
-     * @throws RuntimeException if user already registered.
-     * @return user id.
      */
     fun register(
         uniqueUsername: String,
@@ -120,6 +119,9 @@ object UserModel {
         return user != null
     }
 
+    /**
+     * Reset the new avatar for user.
+     */
     fun updateAvatar(username: String, path: String) {
         val bytes = File(path).readBytes()
         transaction {
@@ -130,6 +132,9 @@ object UserModel {
         }
     }
 
+    /**
+     * Get avatar as byte array or null if avatar does not exists.
+     */
     fun getAvatar(username: String): ByteArray? {
         return transaction {
             Users
@@ -139,6 +144,9 @@ object UserModel {
         }
     }
 
+    /**
+     * Get avatar as byte array or null if avatar does not exists.
+     */
     fun getAvatar(id: Int): ByteArray? {
         return transaction {
             Users

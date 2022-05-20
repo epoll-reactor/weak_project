@@ -19,13 +19,35 @@ import io.ktor.http.content.*
 import io.ktor.request.*
 import kotlinx.html.InputType
 
+/// By ISO/IEC 5218.
+internal fun resolveGenderFromString(gender: String) =
+    when (gender) {
+        "Male" -> 1
+        "Female" -> 2
+        else -> throw RuntimeException("Wrong gender.")
+    }
+
+/// By ISO/IEC 5218.
+internal fun resolveGenderFromInt(gender: Int) =
+    when (gender) {
+        1 -> "Male"
+        2 -> "Female"
+        else -> throw RuntimeException("Wrong gender code.")
+    }
+
 class ProfileController {
     private fun validateBirthDate(date: String) =
         """^\d{1,2}/\d{1,2}/[1,2]\d{3}$""".toRegex().containsMatchIn(date)
 
     private fun validatePhoneNumber(phoneNumber: String) =
+        // Super exciting and pretty.
         """^(\+\d{2,3})?((\d{9})|(\d{3}[\-]){2}\d{3})$""".toRegex().containsMatchIn(phoneNumber)
 
+    /**
+     * Update profile information.
+     *
+     * NOTE: all fields are required by HTML form.
+     */
     suspend fun setupProfile(call: ApplicationCall) {
         val session = call.sessions.get<User>()
         if (session == null) {
@@ -68,11 +90,6 @@ class ProfileController {
         }
 
         call.respondRedirect("/profile/id${session.id}")
-    }
-
-    suspend fun respondProfileById(call: ApplicationCall, id: Int) {
-        val user = UserModel.getById(id)
-        call.respondProfile(user)
     }
 
     suspend fun changePassword(call: ApplicationCall) {
@@ -118,26 +135,10 @@ class ProfileController {
     }
 }
 
-/// By ISO/IEC 5218.
-fun resolveGenderFromString(gender: String) =
-    when (gender) {
-        "Male" -> 1
-        "Female" -> 2
-        else -> throw RuntimeException("Wrong gender.")
-    }
-
-/// By ISO/IEC 5218.
-fun resolveGenderFromInt(gender: Int) =
-    when (gender) {
-        1 -> "Male"
-        2 -> "Female"
-        else -> throw RuntimeException("Wrong gender code.")
-    }
-
 fun Routing.profile(controller: ProfileController) {
     get("/profile/id{id}") {
         val id = call.parameters.getOrFail<Int>("id").toInt()
-        controller.respondProfileById(call, id)
+        call.respondProfileById(id)
     }
     get("/setup_profile") { call.respondSettings() }
     get("/setup_password") { call.respondPasswordChangeForm() }

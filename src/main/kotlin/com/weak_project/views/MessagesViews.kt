@@ -23,6 +23,9 @@ enum class MessageViewRequest {
     DIALOG_LIST
 }
 
+/**
+ * Create the views for private dialog (with participant) or dialog list.
+ */
 fun toMessageViewList(requestType: MessageViewRequest, messages: MutableList<Message>): MutableList<MessageView> {
     val views = mutableListOf<MessageView>()
 
