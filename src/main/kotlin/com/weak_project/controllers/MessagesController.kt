@@ -4,30 +4,53 @@ import com.weak_project.models.MessagesModel
 import com.weak_project.models.User
 import com.weak_project.views.*
 import io.ktor.application.*
-import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
 import io.ktor.util.*
 
 class MessagesController {
-}
-
-fun Routing.messages(controller: MessagesController) {
-    get("/messages/id{id}") {
+    suspend fun respondMessagesList(call: ApplicationCall) {
         val id = call.parameters.getOrFail<Int>("id").toInt()
         call.respondMessagesList(
             MessagesModel.getDialogList(id)
         )
     }
-    get("/dialog/id{id}") {
+
+    suspend fun respondPrivateDialog(call: ApplicationCall) {
         val session = call.sessions.get<User>()
         if (session == null) {
             call.respondErrorDialog("Session does not exist or is expired.")
-            return@get
+            return
         }
         val user1 = session.id
         val user2 = call.parameters.getOrFail<Int>("id").toInt()
 
         call.respondPrivateDialog(user1, user2)
     }
+
+    suspend fun sendMessage(call: ApplicationCall) {
+        val session = call.sessions.get<User>()
+        if (session == null) {
+            call.respondErrorDialog("Session does not exist or is expired.")
+            return
+        }
+
+        val toId = call.parameters.getOrFail<Int>("id").toInt()
+        val text = call.parameters["messageText"]!!
+
+        MessagesModel.insert(
+            text_ = text,
+            from_ = session.id,
+            to_ = toId,
+            timestamp_ = System.currentTimeMillis() / 1000
+        )
+
+        respondPrivateDialog(call)
+    }
+}
+
+fun Routing.messages(controller: MessagesController) {
+    get("/messages/id{id}") { controller.respondMessagesList(call) }
+    get("/dialog/id{id}") { controller.respondPrivateDialog(call) }
+    get("/sendMessage/to{id}") { controller.sendMessage(call) }
 }

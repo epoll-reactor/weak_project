@@ -33,13 +33,33 @@
                         <h1><b>Dialog with ${companion}</b></h1>
                         <br>
                         <br>
-                        <#list messages?reverse as message>
-                        <div class="cvsList">
-                            <form action="/dialog/id${message.to}">
-                                <h1><b>${message.text}</b></h1>
+                        <#list messageViews?reverse as messageView>
+                        <div class="message">
+                            <form action="/dialog/id${messageView.to}">
+                                <div class="col-lg-1 col-md-8">
+                                    <div class="row" id="real-estates-detail">
+                                        <div class="text-center" id="author">
+                                            <img src=${messageView.avatarPath} alt="Avatar" width="64" height="64">
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>${messageView.timestamp}</p>
+                                <h2>${messageView.text}</h2>
                             </form>
                         </div>
                         </#list>
+
+                    <br>
+                    <div class="row">
+                        <form action="/sendMessage/to${companionId}">
+                            <div class="input-block">
+                                <input type="text" class="message-send-field" id="messageText" name="messageText" required>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="submit_button" formaction="/sendMessage/to${companionId}">Send</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -12,42 +12,61 @@ data class MessageView(
     val from: String,
     val to: String,
     val toId: Int,
-    val timestamp: Long,
+    val timestamp: String,
     var avatarPath: String
 )
+
+enum class MessageViewRequest {
+    /// This used to respond avatars of two persons.
+    PRIVATE_DIALOG,
+    /// This used to respond only sender avatar.
+    DIALOG_LIST
+}
+
+fun toMessageViewList(requestType: MessageViewRequest, messages: MutableList<Message>): MutableList<MessageView> {
+    val views = mutableListOf<MessageView>()
+
+    messages.forEach { message ->
+        val fromUser = UserModel.getById(message.from)
+        val toUser = UserModel.getById(message.to)
+
+        val view = MessageView(
+            text = message.text,
+            from = fromUser.username,
+            to = toUser.firstName + " " + toUser.lastName,
+            toId = toUser.id,
+            timestamp = parseTimestamp(message.timestamp),
+            avatarPath = ""
+        )
+
+        val avatarId = if (requestType == MessageViewRequest.DIALOG_LIST) {
+            message.to
+        } else {
+            message.from
+        }
+
+        val avatar = UserModel.getAvatar(avatarId)
+        if (avatar != null) {
+            view.avatarPath = "/static/avatar$avatarId.png"
+            val realAvatarPath = "build/resources/main/files/avatar$avatarId.png"
+            val file = File(realAvatarPath)
+            if (!file.exists()) {
+                file.writeBytes(avatar)
+            }
+        } else {
+            view.avatarPath = "/static/NoAvatar.png"
+        }
+
+        views += view
+    }
+
+    return views
+}
 
 internal fun makeMessagesPath(template: String) = "src/main/resources/templates/Messages/$template.html"
 
 suspend fun ApplicationCall.respondMessagesList(messages: MutableList<Message>) {
-    val views = mutableListOf<MessageView>()
-
-   messages.forEach { message ->
-       val fromUser = UserModel.getById(message.from)
-       val toUser = UserModel.getById(message.to)
-
-       var view = MessageView(
-           text = message.text,
-           from = fromUser.username,
-           to = toUser.firstName + " " + toUser.lastName,
-           toId = toUser.id,
-           timestamp = message.timestamp,
-           avatarPath = ""
-       )
-
-       val avatar = UserModel.getAvatar(message.to)
-       if (avatar != null) {
-           view.avatarPath = "/static/avatar${message.to}.png"
-           val realAvatarPath = "build/resources/main/files/avatar${message.to}.png"
-           val file = File(realAvatarPath)
-           if (!file.exists()) {
-               file.writeBytes(avatar)
-           }
-       } else {
-           view.avatarPath = "/static/NoAvatar.png"
-       }
-
-       views += view
-   }
+    val views = toMessageViewList(MessageViewRequest.DIALOG_LIST, messages)
 
     respond(
         FreeMarkerContent(

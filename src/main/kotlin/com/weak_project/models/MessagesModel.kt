@@ -63,17 +63,21 @@ object MessagesModel {
 
             dialogList.sortBy { it.timestamp }
 
-            /* return */ dialogList
+            /* return */ dialogList.distinctBy { it.to }.toMutableList()
         }
     }
 
+    /**
+     * Get the dialog between two users itself.
+     */
     fun getPrivateDialog(user1: Int, user2: Int): MutableList<Message> {
         return transaction {
             val dialogList = mutableListOf<Message>()
 
             Messages.selectAll().forEach { message ->
-                if ((message[Messages.from] == user1) and (message[Messages.to] == user2)) {
-                    dialogList += Messages.toObject(message)
+                if (((message[Messages.from] == user1) and (message[Messages.to] == user2)) or
+                    ((message[Messages.from] == user2) and (message[Messages.to] == user1))) {
+                    dialogList.add(Messages.toObject(message))
                 }
             }
 
