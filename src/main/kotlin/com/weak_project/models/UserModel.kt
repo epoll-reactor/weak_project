@@ -33,7 +33,7 @@ object Users : Table("USERS") {
     val country = varchar("country", length = 64).default("")
     val city = varchar("city", length = 64).default("")
     val birthDate = varchar("birthDate", length = 64).default("")
-    val gender = integer("gender").default(1) // By standard ISO/IEC 5218.
+    val gender = integer("gender").default(1) // By ISO/IEC 5218.
     val phone = varchar("phone", length = 15).default("")
     val employerOrEmployee = integer("employerOrEmployee").default(0)
     val avatar = binary("avatar", 1024 * 1024).default(byteArrayOf()).nullable()

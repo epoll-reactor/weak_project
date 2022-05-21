@@ -1,5 +1,6 @@
 package com.weak_project.models
 
+import com.weak_project.models.CVs.references
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -13,8 +14,8 @@ data class Message(
 object Messages : Table("MESSAGES") {
     val id = integer("id").autoIncrement()
     val text = varchar("text", length = 8192)
-    val from = integer("from")
-    val to = integer("to")
+    val from = integer("from") references Users.id
+    val to = integer("to") references Users.id
     val timestamp = long("timestamp")
 
     fun toObject(row: ResultRow) = Message(
