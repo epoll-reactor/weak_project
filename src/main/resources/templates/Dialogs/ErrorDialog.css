@@ -1,19 +1,12 @@
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #e1ff87;
-    margin: 0;
+.bar {
+    padding: 10px;
+    color: #333;
+    background: #fafafa;
+    border: 1px solid #ccc;
 }
 
-* {
-    box-sizing: border-box;
-}
-
-ul.nav {
-    padding-top: 30px;
-    background-color: #c42e2e;
-}
-
-ul.nav > li {
-    display: inline-block;
-    padding: 20px 30px;
+.error {
+    color: #ba3939;
+    background: #ffe0e0;
+    border: 1px solid #a33a3a;
 }
