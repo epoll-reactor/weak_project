@@ -39,7 +39,6 @@ object CVModel {
     }
 
     fun insert(
-        owner: Int,
         skills: String,
         languages: String,
         theCountry: String,
@@ -51,7 +50,6 @@ object CVModel {
                 it[spokenLanguages] = languages
                 it[country] = theCountry
                 it[education] = theEducation
-                it[ownerId] = owner
             }
         }
     }

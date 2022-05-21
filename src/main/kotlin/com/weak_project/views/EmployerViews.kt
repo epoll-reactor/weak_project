@@ -3,9 +3,10 @@ package com.weak_project.views
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.response.*
-import com.weak_project.models.CV
+import com.weak_project.models.*
 
 internal fun makeCVsPath(template: String) = "src/main/resources/templates/CVs/$template.html"
+internal fun makeJobsPath(template: String) = "src/main/resources/templates/Jobs/$template.html"
 
 suspend fun ApplicationCall.respondCVFindDialog() {
     respondTemplate(makeCVsPath("FindCVsDialog"))
@@ -18,4 +19,8 @@ suspend fun ApplicationCall.respondCVList(CVs: MutableList<CV>) {
             mapOf("CVs" to CVs)
         )
     )
+}
+
+suspend fun ApplicationCall.respondJobsList() {
+    respondTemplate(makeJobsPath("AddJobDialog"))
 }

@@ -8,16 +8,7 @@ import io.ktor.sessions.*
 import io.ktor.util.*
 import com.weak_project.models.*
 import com.weak_project.views.*
-import io.ktor.client.*
-import kotlinx.coroutines.runBlocking
 import java.io.File
-import io.ktor.client.request.forms.*
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.response.*
-import io.ktor.http.*
-import io.ktor.http.content.*
-import io.ktor.request.*
-import kotlinx.html.InputType
 
 /// By ISO/IEC 5218.
 internal fun resolveGenderFromString(gender: String) =
@@ -115,7 +106,7 @@ class ProfileController {
 
         ProfileModel.changePassword(session.username, UserModel.hashPassword(newPassword))
 
-        call.respondRedirect("/profile/id${session.username}")
+        call.respondRedirect("/profile/id${session.id}")
     }
 
     suspend fun uploadAvatar(call: ApplicationCall) {
@@ -144,5 +135,5 @@ fun Routing.profile(controller: ProfileController) {
     get("/setup_password") { call.respondPasswordChangeForm() }
     get("/confirm_setup_profile") { controller.setupProfile(call) }
     get("/confirm_change_password") { controller.changePassword(call) }
-    post("/uploadAvatar") { controller.uploadAvatar(call) }
+    post("/upload_avatar") { controller.uploadAvatar(call) }
 }
