@@ -1,4 +1,4 @@
-package com.weak_project.IO
+package com.weak_project.utility
 
 import io.ktor.application.*
 import io.ktor.http.content.*

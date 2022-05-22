@@ -4,6 +4,7 @@ import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.response.*
 import com.weak_project.models.*
+import com.weak_project.models.Users.avatar
 import java.io.File
 
 internal fun makeCVsPath(template: String) = "src/main/resources/templates/CVs/$template.html"

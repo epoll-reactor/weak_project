@@ -1,6 +1,6 @@
 package com.weak_project.controllers
 
-import com.weak_project.IO.uploadFile
+import com.weak_project.utility.uploadFile
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
