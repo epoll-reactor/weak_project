@@ -4,6 +4,7 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 data class Job(
+    val id: Int,
     val roleName: String,
     val description: String,
     val companyName: String,
@@ -15,6 +16,7 @@ data class Job(
 )
 
 object Jobs : Table("JOBS") {
+    val id = integer("id").autoIncrement()
     val roleName = varchar("roleName", length = 256)
     val description = varchar("description", length = 8192)
     val companyName = varchar("companyName", length = 256)
@@ -22,9 +24,10 @@ object Jobs : Table("JOBS") {
     val keySkills = varchar("keySkills", length = 1024)
     val spokenLanguages = varchar("spokenLanguages", length = 1024)
     val requiredEducation = varchar("requiredEducation", length = 64)
-    val ownerId = integer("id").autoIncrement()
+    val ownerId = integer("ownerId") references Users.id
 
     fun toObject(row: ResultRow) = Job(
+        id = row[id],
         roleName = row[roleName],
         description = row[description],
         companyName = row[companyName],
@@ -53,7 +56,8 @@ object JobModel {
         country_: String,
         keySkills_: String,
         spokenLanguages_: String,
-        requiredEducation_: String
+        requiredEducation_: String,
+        ownerId_: Int
     ) {
         transaction {
             Jobs.insert {
@@ -64,7 +68,31 @@ object JobModel {
                 it[keySkills] = keySkills_
                 it[spokenLanguages] = spokenLanguages_
                 it[requiredEducation] = requiredEducation_
+                it[ownerId] = ownerId_
             }
+        }
+    }
+
+    fun get(jobId: Int): Job? {
+        return transaction {
+            Jobs
+                .select { Jobs.id eq jobId }
+                .map { Jobs.toObject(it) }
+                .firstOrNull()
+        }
+    }
+
+    fun getByOwnerId(ownerId: Int, maxCount: Int = 5): MutableList<Job> {
+        return transaction {
+            val jobsList = mutableListOf<Job>()
+
+            Jobs.selectAll().forEach {
+                if (jobsList.size <= maxCount && it[Jobs.ownerId] == ownerId) {
+                    jobsList.add(Jobs.toObject(it))
+                }
+            }
+
+            /* return */ jobsList
         }
     }
 

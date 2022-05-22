@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
     <link rel="stylesheet" href="/static/SideMenu.css">
     <link rel="stylesheet" href="/static/Profiles/Profile.css">
+    <link rel="stylesheet" href="/static/Jobs/JobsList.css">
     <title>Profile</title>
     <br>
 </head>
@@ -64,6 +65,22 @@
                                     </tr>
                                 </table>
                             </div>
+                        </div>
+
+                        <br>
+
+                        <div class="tab-content">
+                            <div class="jobTitle">
+                                <h3><b>Recently added jobs</b></h3>
+                            </div>
+                            <#list jobs?reverse as job>
+                                <div class="jobsList">
+                                    <form action="/job/id${job.id}">
+                                        <h3><b>${job.roleName}</b>, in company ${job.companyName}</h3>
+                                        <button type="submit" class="submit_button">Open</button>
+                                    </form>
+                                </div>
+                            </#list>
                         </div>
                     </div>
                 </div>

@@ -21,6 +21,21 @@ suspend fun ApplicationCall.respondCVList(CVs: MutableList<CV>) {
     )
 }
 
-suspend fun ApplicationCall.respondJobsList() {
+suspend fun ApplicationCall.respondAddJobDialog() {
     respondTemplate(makeJobsPath("AddJobDialog"))
+}
+
+suspend fun ApplicationCall.respondJobById(id: Int) {
+    val job: Job? = JobModel.get(id)
+    if (job == null) {
+        respondErrorDialog("Job with id $id not found.")
+        return
+    }
+
+    respond(
+        FreeMarkerContent(
+            makeJobsPath("Job"),
+            mapOf("job" to job)
+        )
+    )
 }

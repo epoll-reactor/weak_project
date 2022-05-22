@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/Style.css">
+    <link rel="stylesheet" href="/static/SideMenu.css">
+    <link rel="stylesheet" href="/static/Profiles/Profile.css">
+    <link rel="stylesheet" href="/static/Jobs/Job.css">
+    <title>Job</title>
+    <br>
+</head>
+<body>
+
+<div class="sidenav">
+    <a class="back" href="/profile">Back</a>
+</div>
+
+<div class="container">
+    <div class="main">
+        <div class="row" id="real-estates-detail">
+                <div class="panel">
+                    <div class="job_panel">
+                        <div class="panel-body">
+                            <div id="myTabContent" class="tab-content">
+                                <div class="tab-pane fade active in" id="detail">
+                                    <div style="font-size: 25px; font-weight: bold;">${job.roleName} </div>
+
+                                    <span style="font-size: 20px; font-weight: bold;">${job.companyName}, </span>
+                                    <span style="font-size: 20px;">${job.country}</span>
+
+                                    <br>
+                                    <br>
+
+                                    <button type="submit" class="apply_button">Apply</button>
+
+                                    <br>
+                                    <br>
+
+                                    <span style="font-size: 20px;">${job.description}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

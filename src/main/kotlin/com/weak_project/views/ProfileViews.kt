@@ -89,13 +89,27 @@ internal fun makeProfilePath(template: String) = "src/main/resources/templates/P
 
 suspend fun ApplicationCall.respondProfile(user: User) {
     try {
-        respond(
-            FreeMarkerContent(
-                makeProfilePath(
-                    if (isEmployee(user.employerOrEmployee)) "EmployeeProfile" else "EmployerProfile"
-                ), mapOf("user" to getUserView(user))
+        if (isEmployee(user.employerOrEmployee)) {
+            respond(
+                FreeMarkerContent(
+                    makeProfilePath(
+                        "EmployeeProfile"
+                    ), mapOf("user" to getUserView(user))
+                )
             )
-        )
+        } else {
+            respond(
+                FreeMarkerContent(
+                    makeProfilePath(
+                        "EmployerProfile"
+                    ),
+                    mapOf(
+                        "user" to getUserView(user),
+                        "jobs" to JobModel.getByOwnerId(ownerId = user.id, maxCount = 3)
+                    )
+                )
+            )
+        }
     } catch (e: Exception) {
         respondErrorDialog(e.message!!)
     }
