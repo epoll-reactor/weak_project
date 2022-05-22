@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+    <link rel="stylesheet" href="/static/Style.css">
+    <title>Log in</title>
+</head>
+
+<body style="text-align: center; font-family: sans-serif">
+<h1>Welcome</h1>
+    <div class="container">
+        <form action="/login">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required><br><br>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required><br><br>
+
+            <button type="submit" class="submit_button" formaction="/login">Log in</button>
+            <button type="submit" class="submit_button" formaction="/register">Register</button>
+        </form>
+    </div>
+</body>
+</html>

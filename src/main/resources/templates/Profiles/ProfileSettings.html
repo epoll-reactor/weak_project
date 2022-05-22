@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/Style.css">
+    <link rel="stylesheet" href="/static/SideMenu.css">
+    <link rel="stylesheet" href="/static/Profiles/Profile.css">
+    <title>Registration</title>
+</head>
+<body>
+
+<div class="sidenav">
+    <a href="/setup_profile">General</a>
+    <a href="/setup_password">Privacy</a>
+    <a class="back" href="/profile">Back</a>
+</div>
+
+<div id="main" align="left">
+    <form action="/confirm_setup_profile">
+        <h1>Edit profile</h1>
+
+        <label for="firstName"><b>First name</b></label>
+        <input type="text" id="firstName" name="firstName" value=${user.firstName} required><br><br>
+
+        <label for="lastName"><b>Last name</b></label>
+        <input type="text" id="lastName" name="lastName" value=${user.lastName} required><br><br>
+
+        <label for="country"><b>Country</b></label>
+        <input type="text" id="country" name="country" value=${user.country}><br><br>
+
+        <label for="city"><b>City</b></label>
+        <input type="text" id="city" name="city" value=${user.city}><br><br>
+
+        <label for="birthDate"><b>Birth date</b></label>
+        <input type="text" id="birthDate" name="birthDate" value=${user.birthDate}><br><br>
+
+        <div>
+            <label for="gender">
+                <b>Gender:</b>
+            </label><br>
+            <input type="radio" value="Male" id="gender" name="gender" checked> Male
+            <input type="radio" value="Female" name="gender"> Female
+        </div>
+        <br>
+        <br>
+
+        <label for="phone"><b>Phone:</b></label>
+        <input type="text" id="phone" name="phone" placeholder="(+48)XXX-XXX-XXX" value=${user.phone}><br><br>
+
+        <button type="submit" class="submit_button" formaction="/confirm_setup_profile">Setup</button>
+    </form>
+</div>
+
+</body>
+</html>

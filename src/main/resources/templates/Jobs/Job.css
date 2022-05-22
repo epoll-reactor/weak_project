@@ -1,0 +1,18 @@
+.apply_button {
+    background-color: #afafaf;
+    color: black;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    opacity: 0.9;
+    font-size: 18px;
+}
+
+.apply_button:hover {
+    color: white;
+}
+
+.job_panel {
+    padding: 25px;
+}

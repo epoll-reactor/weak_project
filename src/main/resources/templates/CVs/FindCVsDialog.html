@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/Style.css">
+    <link rel="stylesheet" href="/static/SideMenu.css">
+    <link rel="stylesheet" href="/static/Profiles/Profile.css">
+    <title>Find CV's</title>
+    <br>
+</head>
+<body>
+
+<div class="sidenav">
+    <a class="back" href="/profile">Back</a>
+</div>
+
+<div class="container">
+    <div class="main">
+        <div class="row" id="real-estates-detail">
+            <div class="panel">
+                <div class="panel-body">
+                    <div id="myTabContent" class="tab-content">
+                        <form action="/commit_cvs_search">
+                            <div class="tab-pane fade active in" id="detail">
+                                <h3><b>Find CV's by</b></h3>
+                                <br>
+                                <table class="table table-th-block">
+                                    <label for="keySkills"><b>Key skills</b></label>
+                                    <input type="text" id="keySkills" name="keySkills"><br><br>
+
+                                    <label for="spokenLanguages"><b>Languages</b></label>
+                                    <input type="text" id="spokenLanguages" name="spokenLanguages"><br><br>
+
+                                    <label for="country"><b>Country</b></label>
+                                    <input type="text" id="country" name="country"><br><br>
+
+                                    <label><b>Education</b></label>
+                                    <br>
+                                    <div class="radiobuttons-container">
+                                        <label for="education" class="mdl-radio mdl-js-radio">
+                                            <input id="education" class="mdl-radio__button" type="radio" name="education" value="associate"/>
+                                            <span class="mdl-radio__label">Associate</span>
+                                        </label>
+
+                                        <label for="education" class="mdl-radio mdl-js-radio">
+                                            <input class="mdl-radio__button" type="radio" name="education" value="bachelors"/>
+                                            <span class="mdl-radio__label">Bachelor's</span>
+                                        </label>
+
+                                        <label for="education" class="mdl-radio mdl-js-radio">
+                                            <input class="mdl-radio__button" type="radio" name="education" value="masters"/>
+                                            <span class="mdl-radio__label">Master's</span>
+                                        </label>
+                                    </div>
+                                </table>
+                                <button type="submit" class="submit_button" formaction="/commit_cvs_search">Find</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

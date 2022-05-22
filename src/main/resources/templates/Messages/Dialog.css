@@ -1,0 +1,28 @@
+.row {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.input-block {
+    width: 90%;
+    float: left;
+}
+
+.button-block {
+    width: 10%;
+    float: left;
+}
+
+.message {
+    padding: 20px;
+    background-color: #e1e1e1;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    color: black;
+    font-size: 15px;
+}
+
+.message-send-field {
+    width: 90%;
+    float: left;
+}

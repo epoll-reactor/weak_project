@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+    <link rel="stylesheet" href="/static/Style.css">
+    <title>Registration</title>
+</head>
+
+<body style="text-align: center; font-family: sans-serif">
+<h1>Welcome</h1>
+<div class="container">
+    <form action="/create_account">
+        <label for="firstName">First name</label>
+        <input type="text" id="firstName" name="firstName" required><br><br>
+
+        <label for="lastName">Last name</label>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+
+        <div>
+            <label for="employerOrEmployee">
+                <b>Who you are?</b>
+            </label><br>
+            <input type="radio" value="1" id="employerOrEmployee" name="employerOrEmployee" checked> I am looking for a job
+            <input type="radio" value="2" name="employerOrEmployee"> I offer jobs
+        </div>
+
+        <button type="submit" class="submit_button" value="Register" formaction="/create_account">Create account
+        </button>
+    </form>
+</div>
+</body>
+</html>

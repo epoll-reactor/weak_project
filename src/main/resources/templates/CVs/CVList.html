@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/Style.css">
+    <link rel="stylesheet" href="/static/SideMenu.css">
+    <link rel="stylesheet" href="/static/Profiles/Profile.css">
+    <link rel="stylesheet" href="/static/CVs/CVList.css">
+    <title>CV's</title>
+    <br>
+</head>
+<body>
+
+<div class="sidenav">
+    <a class="back" href="/profile">Back</a>
+</div>
+
+<div class="container">
+    <div class="main">
+        <div>
+            <div class="panel">
+                <div class="panel-body">
+                    <div id="myTabContent" class="tab-content">
+                        <h1><b>Search results</b></h1>
+                        <br>
+                        <br>
+                        <#list CVs?reverse as CV>
+                            <div class="cvsList">
+                                <form action="/profile/id${CV.ownerId}">
+                                    <h2><b>${CV.ownerId}</b>, most skilled in ${CV.keySkills}</h2>
+                                    <!-- TODO: Make transition directly to CV (that not exists yet), not to profile. -->
+                                    <button type="submit" class="submit_button" href="/profile/id${CV.ownerId}">Open</button>
+                                </form>
+                            </div>
+                        </#list>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

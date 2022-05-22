@@ -1,42 +1,41 @@
 package com.weak_project.config
 
 import io.ktor.application.*
-import io.ktor.auth.*
+import io.ktor.http.content.*
 import io.ktor.freemarker.*
 import io.ktor.routing.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
-import com.weak_project.mvc.user.UserController
-import com.weak_project.mvc.user.installUserRoutes
-
-/**
- * Configure all modules and create server.
- */
-fun createApplication(): BaseApplicationEngine {
-    setupDatabaseServer()
-    return createServer(Netty)
-}
-
-fun createServer(
-    engine: ApplicationEngineFactory<BaseApplicationEngine,
-            out ApplicationEngine.Configuration>
-) = embeddedServer(
-        engine,
-        port = 8080,
-        module = Application::mainModule,
-        watchPaths = listOf("classes")
-    )
+import io.ktor.sessions.*
+import com.weak_project.controllers.*
+import com.weak_project.controllers.user
+import com.weak_project.models.User
 
 fun Application.setupRoutes() {
     val userController = UserController()
+    val profileController = ProfileController()
+    val employerController = EmployerController()
+    val messagesController = MessagesController()
+    val jobController = JobController()
 
     routing {
-        installUserRoutes(userController)
+        static("/static") {
+            resources("files")
+            resources("templates")
+        }
+
+        user(userController)
+        profile(profileController)
+        employer(employerController)
+        messages(messagesController)
+        jobs(jobController)
     }
 }
 
-fun Application.mainModule() {
+@Suppress("unused")
+fun Application.module() {
     install(FreeMarker)
-    install(Authentication)
+    install(Sessions) {
+        cookie<User>("user")
+    }
+    setupDatabaseServer(environment.config)
     setupRoutes()
 }

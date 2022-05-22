@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/Style.css">
+    <link rel="stylesheet" href="/static/SideMenu.css">
+    <link rel="stylesheet" href="/static/Profiles/Profile.css">
+    <link rel="stylesheet" href="/static/CVs/CVList.css">
+    <title>Jobs</title>
+    <br>
+</head>
+<body>
+
+<div class="sidenav">
+    <a class="back" href="/profile">Back</a>
+</div>
+
+<div class="container">
+    <div class="main">
+        <form action="/commit_add_job">
+            <h1>Add job</h1>
+
+            <label for="roleName"><b>Role name</b></label>
+            <input type="text" id="roleName" name="roleName" required><br><br>
+
+            <label for="description"><b>Description</b></label>
+            <input type="text" id="description" name="description" required><br><br>
+
+            <label for="preferredSkills"><b>Preferred skills</b></label>
+            <input type="text" id="preferredSkills" name="preferredSkills" required><br><br>
+
+            <label for="preferredLanguages"><b>Preferred spoken languages</b></label>
+            <input type="text" id="preferredLanguages" name="preferredLanguages" required><br><br>
+
+            <b>Education</b>
+            <div class="radiobuttons-container">
+                <label for="education" class="mdl-radio mdl-js-radio">
+                    <input id="education" class="mdl-radio__button" type="radio" name="education" value="associate" required/>
+                    <span class="mdl-radio__label">Associate</span>
+                </label>
+
+                <label for="education" class="mdl-radio mdl-js-radio">
+                    <input class="mdl-radio__button" type="radio" name="education" value="bachelors" required/>
+                    <span class="mdl-radio__label">Bachelor's</span>
+                </label>
+
+                <label for="education" class="mdl-radio mdl-js-radio">
+                    <input class="mdl-radio__button" type="radio" name="education" value="masters" required/>
+                    <span class="mdl-radio__label">Master's</span>
+                </label>
+            </div>
+
+            <button type="submit" class="submit_button">Setup</button>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+</html>
