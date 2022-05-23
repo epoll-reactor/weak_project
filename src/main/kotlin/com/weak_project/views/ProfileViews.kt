@@ -54,9 +54,6 @@ internal suspend fun getSessionUser(call: ApplicationCall): UserView? {
 /**
  * Setup profile picture by following rule: if user has avatar in database, it has
  * set as profile picture to render; otherwise default avatar is set.
- *
- * \TODO: Avatar located in build directory, while I am try to search in src. Actually
- *        separate place for that stuff should be organized.
  */
 internal fun resolveAvatar(view: UserView) {
     val avatar = UserModel.getAvatar(view.username)
