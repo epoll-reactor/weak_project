@@ -36,7 +36,7 @@ object Users : Table("USERS") {
     val gender = integer("gender").default(1) // By ISO/IEC 5218.
     val phone = varchar("phone", length = 15).default("")
     val employerOrEmployee = integer("employerOrEmployee").default(0)
-    val avatar = binary("avatar", 1024 * 1024).default(byteArrayOf()).nullable()
+    val avatar = binary("avatar", 1024 * 1024)
 
     fun toObject(row: ResultRow) = User(
         id = row[id],
