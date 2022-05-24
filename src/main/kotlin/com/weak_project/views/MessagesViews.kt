@@ -4,7 +4,9 @@ import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.response.*
 import com.weak_project.models.Message
+import com.weak_project.models.User
 import com.weak_project.models.UserModel
+import io.ktor.sessions.*
 import java.io.File
 
 data class MessageView(
@@ -71,10 +73,19 @@ internal fun makeMessagesPath(template: String) = "src/main/resources/templates/
 suspend fun ApplicationCall.respondMessagesList(messages: MutableList<Message>) {
     val views = toMessageViewList(MessageViewRequest.DIALOG_LIST, messages)
 
+    val session = sessions.get<User>()
+    if (session == null) {
+        respondLogin()
+        return
+    }
+
     respond(
         FreeMarkerContent(
             makeMessagesPath("MessagesList"),
-            mapOf("messagesViews" to views)
+            mapOf(
+                "messagesViews" to views,
+                "userId" to session.id
+            )
         )
     )
 }
