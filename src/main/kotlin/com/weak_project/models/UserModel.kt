@@ -28,14 +28,14 @@ object Users : Table("USERS") {
     val id = integer("id").autoIncrement()
     val username = varchar("username", length = 50).uniqueIndex()
     val password = varchar("password", length = 64)
-    val firstName = varchar("firstName", length = 64).default("")
-    val lastName = varchar("lastName", length = 64).default("")
-    val country = varchar("country", length = 64).default("")
-    val city = varchar("city", length = 64).default("")
-    val birthDate = varchar("birthDate", length = 64).default("")
+    val firstName = varchar("firstName", length = 64)
+    val lastName = varchar("lastName", length = 64)
+    val country = varchar("country", length = 64)
+    val city = varchar("city", length = 64)
+    val birthDate = varchar("birthDate", length = 64)
     val gender = integer("gender").default(1) // By ISO/IEC 5218.
-    val phone = varchar("phone", length = 15).default("")
-    val employerOrEmployee = integer("employerOrEmployee").default(0)
+    val phone = varchar("phone", length = 15)
+    val employerOrEmployee = integer("employerOrEmployee")
     val avatar = binary("avatar", 1024 * 1024)
 
     fun toObject(row: ResultRow) = User(
