@@ -4,7 +4,6 @@ import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.response.*
 import com.weak_project.models.*
-import com.weak_project.models.Users.avatar
 import java.io.File
 
 internal fun makeCVsPath(template: String) = "src/main/resources/templates/CVs/$template.html"
@@ -23,8 +22,29 @@ suspend fun ApplicationCall.respondCVList(CVs: MutableList<CV>) {
     )
 }
 
+suspend fun ApplicationCall.respondEditJobDialog(job: Job) {
+    respond(
+        FreeMarkerContent(
+            makeJobsPath("JobDialog"),
+            mapOf("job" to job)
+        )
+    )
+}
+
 suspend fun ApplicationCall.respondAddJobDialog() {
-    respondTemplate(makeJobsPath("AddJobDialog"))
+    respondEditJobDialog(
+        Job(
+            id = 0,
+            roleName = "",
+            description = "",
+            companyName = "",
+            country = "",
+            keySkills = "",
+            spokenLanguages = "",
+            requiredEducation = "",
+            ownerId = 0
+        )
+    )
 }
 
 suspend fun ApplicationCall.respondJobById(id: Int) {

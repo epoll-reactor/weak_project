@@ -21,16 +21,16 @@
             <h1>Add job</h1>
 
             <label for="roleName"><b>Role name</b></label>
-            <input type="text" id="roleName" name="roleName" required><br><br>
+            <input type="text" id="roleName" name="roleName" value=${job.roleName} required><br><br>
 
             <label for="description"><b>Description</b></label>
-            <input type="text" id="description" name="description" required><br><br>
+            <input type="text" id="description" name="description" value=${job.description} required><br><br>
 
             <label for="preferredSkills"><b>Preferred skills</b></label>
-            <input type="text" id="preferredSkills" name="preferredSkills" required><br><br>
+            <input type="text" id="preferredSkills" name="preferredSkills" value=${job.keySkills} required><br><br>
 
             <label for="preferredLanguages"><b>Preferred spoken languages</b></label>
-            <input type="text" id="preferredLanguages" name="preferredLanguages" required><br><br>
+            <input type="text" id="preferredLanguages" name="preferredLanguages"  value=${job.spokenLanguages} required><br><br>
 
             <b>Education</b>
             <div class="radiobuttons-container">

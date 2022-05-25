@@ -1,10 +1,7 @@
 package com.weak_project.controllers
 
-import com.weak_project.models.JobModel
-import com.weak_project.models.User
-import com.weak_project.views.respondJobById
-import com.weak_project.views.respondAddJobDialog
-import com.weak_project.views.respondLogin
+import com.weak_project.models.*
+import com.weak_project.views.*
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
@@ -44,6 +41,10 @@ fun Routing.jobs(controller: JobController) {
     get("/job/id{id}") {
         val id = call.parameters.getOrFail<Int>("id").toInt()
         call.respondJobById(id)
+    }
+    get("/edit_job/id{id}") {
+        val id = call.parameters.getOrFail<Int>("id").toInt()
+        call.respondEditJobDialog(JobModel.get(id)!!)
     }
     get("/add_job") { call.respondAddJobDialog() }
     get("/commit_add_job") { controller.commitAddJob(call) }
