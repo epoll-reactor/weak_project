@@ -76,7 +76,6 @@
                             <#list jobs?reverse as job>
                                 <div class="jobsList">
                                     <form>
-<!--                                    <form action="/job/id${job.id}">-->
                                         <h3><b>${job.roleName}</b>, in company ${job.companyName}</h3>
                                         <button type="submit" class="submit_button" formaction="/job/id${job.id}">Open</button>
                                         <button type="submit" class="submit_button" formaction="/edit_job/id${job.id}">Edit</button>

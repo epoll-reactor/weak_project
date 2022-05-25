@@ -76,7 +76,7 @@ class UserController {
 }
 
 fun Routing.user(controller: UserController) {
-    get("/") { call.respondLogin() }
+    get("/welcome") { call.respondLogin() }
     get("/login") { controller.login(call) }
     get("/register") { controller.register(call) }
     get ("/create_account") { controller.createAccount(call) }

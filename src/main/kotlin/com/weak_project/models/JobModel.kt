@@ -82,6 +82,22 @@ object JobModel {
         }
     }
 
+    fun getSome(maxCount: Int = 5): MutableList<Job> {
+        return transaction {
+            val jobsList = mutableListOf<Job>()
+
+            Jobs.selectAll().forEach {
+                if (jobsList.size <= maxCount) {
+                    jobsList.add(Jobs.toObject(it))
+                }
+            }
+
+            jobsList.shuffle()
+
+            /* return */ jobsList
+        }
+    }
+
     fun getByOwnerId(ownerId: Int, maxCount: Int = 5): MutableList<Job> {
         return transaction {
             val jobsList = mutableListOf<Job>()

@@ -22,6 +22,7 @@ fun Application.setupRoutes() {
             resources("templates")
         }
 
+        startScreen()
         user(userController)
         profile(profileController)
         employer(employerController)
