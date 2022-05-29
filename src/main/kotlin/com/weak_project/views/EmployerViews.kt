@@ -34,18 +34,6 @@ suspend fun ApplicationCall.respondEditJobDialog(job: Job) {
     )
 }
 
-//suspend fun ApplicationCall.respondAddJobDialog(job: Job) {
-//    respond(
-//        FreeMarkerContent(
-//            makeJobsPath("JobDialog"),
-//            mapOf(
-//                "job" to job,
-//                "actionPath" to "/commit_add_job"
-//            )
-//        )
-//    )
-//}
-
 suspend fun ApplicationCall.respondAddJobDialog() {
     val job = Job(
         id = 0,
