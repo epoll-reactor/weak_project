@@ -112,14 +112,43 @@ object JobModel {
         }
     }
 
+    fun update(
+        roleName: String = "",
+        description: String = "",
+        companyName: String = "",
+        country: String = "",
+        keySkills: String = "",
+        spokenLanguages: String = "",
+        requiredEducation: String = "",
+        ownerId: Int
+    ) {
+        transaction {
+            Jobs
+                .update ({ Jobs.ownerId eq ownerId }) {
+                    fun updateIfNotEmpty(column: Column<String>, field: String) {
+                        if (field.isNotEmpty())
+                            it[column] = field
+                    }
+
+                    updateIfNotEmpty(Jobs.roleName, roleName)
+                    updateIfNotEmpty(Jobs.description, description)
+                    updateIfNotEmpty(Jobs.companyName, companyName)
+                    updateIfNotEmpty(Jobs.country, country)
+                    updateIfNotEmpty(Jobs.keySkills, keySkills)
+                    updateIfNotEmpty(Jobs.spokenLanguages, spokenLanguages)
+                    updateIfNotEmpty(Jobs.requiredEducation, requiredEducation)
+                }
+        }
+    }
+
     fun getBy(
-        roleName_: String,
-        description_: String,
-        companyName_: String,
-        country_: String,
-        keySkills_: String,
-        spokenLanguages_: String,
-        requiredEducation_: String
+        roleName: String,
+        description: String,
+        companyName: String,
+        country: String,
+        keySkills: String,
+        spokenLanguages: String,
+        requiredEducation: String
     ): MutableList<Job> {
         return transaction {
             val jobsList = mutableListOf<Job>()
@@ -138,13 +167,13 @@ object JobModel {
                     }
                 }
 
-                condition = makeBranch(Jobs.roleName, roleName_)
-                condition = makeBranch(Jobs.description, description_)
-                condition = makeBranch(Jobs.companyName, companyName_)
-                condition = makeBranch(Jobs.country, country_)
-                condition = makeBranch(Jobs.keySkills, keySkills_)
-                condition = makeBranch(Jobs.spokenLanguages, spokenLanguages_)
-                condition = makeBranch(Jobs.requiredEducation, requiredEducation_)
+                condition = makeBranch(Jobs.roleName, roleName)
+                condition = makeBranch(Jobs.description, description)
+                condition = makeBranch(Jobs.companyName, companyName)
+                condition = makeBranch(Jobs.country, country)
+                condition = makeBranch(Jobs.keySkills, keySkills)
+                condition = makeBranch(Jobs.spokenLanguages, spokenLanguages)
+                condition = makeBranch(Jobs.requiredEducation, requiredEducation)
 
                 if (condition) {
                     jobsList.add(Jobs.toObject(it))
