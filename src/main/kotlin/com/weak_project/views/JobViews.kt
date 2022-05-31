@@ -8,6 +8,11 @@ import com.weak_project.models.User
 import io.ktor.sessions.*
 
 suspend fun ApplicationCall.respondJobList(jobs: MutableList<Job>) {
+    if (jobs.isEmpty()) {
+        respondErrorDialog("Sorry, we cannot satisfy your criteria")
+        return
+    }
+
     val session = sessions.get<User>()
     if (session == null) {
         respondLogin()
