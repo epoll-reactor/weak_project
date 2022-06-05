@@ -9,6 +9,7 @@ import io.ktor.sessions.*
 import io.ktor.util.*
 import respondAddCVDialog
 import respondCVById
+import respondEditCVDialog
 
 class CVController {
     suspend fun commitAddCV(call: ApplicationCall) {
@@ -52,7 +53,7 @@ class CVController {
             ownerId_ = session.id
         )
 
-        call.respondRedirect("/profile/id${session.id}")
+        call.respondRedirect("/cv/id${session.id}")
     }
 }
 
@@ -63,7 +64,7 @@ fun Routing.cvs(controller: CVController) {
     }
     get("/edit_cv/id{id}") {
         val id = call.parameters.getOrFail<Int>("id").toInt()
-        call.respondEditJobDialog(JobModel.get(id)!!)
+        call.respondEditCVDialog(CVModel.get(id)!!)
     }
     get("/commit_edit_cv") { controller.commitEditCV(call) }
     get("/add_cv") { call.respondAddCVDialog() }

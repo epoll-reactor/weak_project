@@ -26,6 +26,19 @@ suspend fun ApplicationCall.respondCVById(call: ApplicationCall, id: Int) {
     )
 }
 
+suspend fun ApplicationCall.respondEditCVDialog(cv: CV) {
+    respond(
+        FreeMarkerContent(
+            makeCVsPath("CVDialog1"),
+            mapOf(
+                "cv" to cv,
+                "windowTitle" to "Edit CV",
+                "actionPath" to "/commit_edit_cv"
+            )
+        )
+    )
+}
+
 suspend fun ApplicationCall.respondAddCVDialog() {
     val cv = CV(
         id = 0,
