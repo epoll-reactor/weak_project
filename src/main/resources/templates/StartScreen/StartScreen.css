@@ -1,0 +1,16 @@
+.find_job_button {
+    background-color: #afafaf;
+    color: black;
+    padding: 16px 20px;
+    margin: -40px 30px;
+    border: none;
+    cursor: pointer;
+    width: 25%;
+    opacity: 0.9;
+    font-size: 18px;
+    float: right;
+}
+
+.find_job_button:hover {
+    color: white;
+}

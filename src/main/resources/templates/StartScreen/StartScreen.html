@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
     <link rel="stylesheet" href="/static/Style.css">
     <link rel="stylesheet" href="/static/SideMenu.css">
-    <link rel="stylesheet" href="/static/Profiles/Profile.css">
+    <link rel="stylesheet" href="/static/StartScreen/StartScreen.css">
     <link rel="stylesheet" href="/static/Jobs/Job.css">
     <title>Welcome</title>
     <br>
@@ -19,8 +19,14 @@
 <div class="container">
     <div class="main">
 
-        <div class="jobTitle">
-            <h1><b>Explore new jobs</b></h1>
+        <div>
+            <div class="jobTitle">
+                <h1><b>Explore new jobs</b></h1>
+            </div>
+
+            <form action="/find_job">
+                <button type="submit" class="find_job_button">Find jobs</button>
+            </form>
         </div>
 
         <div class="row" id="real-estates-detail">

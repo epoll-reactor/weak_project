@@ -3,6 +3,7 @@ package com.weak_project.controllers
 import com.weak_project.models.*
 import com.weak_project.views.*
 import io.ktor.application.*
+import io.ktor.freemarker.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
@@ -62,6 +63,24 @@ class JobController {
 
         call.respondRedirect("/profile/id${session.id}")
     }
+
+    suspend fun commitFindJob(call: ApplicationCall) {
+        val roleName = call.parameters["roleName"]!!
+        val description = call.parameters["description"]!!
+        val preferredSkills = call.parameters["preferredSkills"]!!
+        val preferredLanguages = call.parameters["preferredLanguages"]!!
+        val education = call.parameters["education"]!!
+
+        val jobs = JobModel.getBy(
+            roleName = roleName,
+            description = description,
+            keySkills = preferredSkills,
+            spokenLanguages = preferredLanguages,
+            requiredEducation = education
+        )
+
+        call.respondJobList(jobs)
+    }
 }
 
 fun Routing.jobs(controller: JobController) {
@@ -76,4 +95,6 @@ fun Routing.jobs(controller: JobController) {
     get("/commit_edit_job") { controller.commitEditJob(call) }
     get("/add_job") { call.respondAddJobDialog() }
     get("/commit_add_job") { controller.commitAddJob(call) }
+    get("/find_job") { call.respondFindJobDialog() }
+    get("/commit_find_job") { controller.commitFindJob(call) }
 }

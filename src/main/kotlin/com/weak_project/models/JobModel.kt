@@ -142,13 +142,13 @@ object JobModel {
     }
 
     fun getBy(
-        roleName: String,
-        description: String,
-        companyName: String,
-        country: String,
-        keySkills: String,
-        spokenLanguages: String,
-        requiredEducation: String
+        roleName: String = "",
+        description: String = "",
+        companyName: String = "",
+        country: String = "",
+        keySkills: String = "",
+        spokenLanguages: String = "",
+        requiredEducation: String = ""
     ): MutableList<Job> {
         return transaction {
             val jobsList = mutableListOf<Job>()

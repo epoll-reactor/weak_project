@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/SideMenu.css">
+    <link rel="stylesheet" href="/static/Profiles/Profile.css">
+    <link rel="stylesheet" href="/static/Jobs/JobsList.css">
+    <title>Profile</title>
+    <br>
+</head>
+<body>
+
+<div class="container">
+    <div class="sidenav">
+        <a href="/setup_profile">Edit</a>
+        <a href="/find_cvs">Find CV's</a>
+        <a href="/add_job">Add job</a>
+        <a class="back" href="/profile/id${sessionId}">Back</a>
+    </div>
+
+    <div class="main">
+        <div class="row" id="real-estates-detail">
+            <div class="col-lg-8 col-md-8 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body">
+
+                        <div class="tab-content">
+                            <#list jobs?reverse as job>
+                            <div class="jobsList">
+                                <form>
+                                    <h3><b>${job.roleName}</b>, in company ${job.companyName}</h3>
+                                    <button type="submit" class="submit_button" formaction="/job/id${job.id}">Open</button>
+                                </form>
+                            </div>
+                        </#list>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
