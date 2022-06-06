@@ -1,9 +1,12 @@
 package com.weak_project.models
 
+
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.*
 
+
 data class CV(
+    val id: Int,
     val keySkills: String, // Comma-separated list.
     val spokenLanguages: String, // Comma-separated list.
     val country: String,
@@ -20,6 +23,7 @@ object CVs : Table("CVS") {
     val ownerId = integer("ownerId") references Users.id
 
     fun toObject(row: ResultRow) = CV(
+        id = row[id],
         keySkills = row[keySkills],
         spokenLanguages = row[spokenLanguages],
         country = row[country],
@@ -42,7 +46,8 @@ object CVModel {
         skills: String,
         languages: String,
         theCountry: String,
-        theEducation: String
+        theEducation: String,
+        ownerId__: Int
     ) {
         transaction {
             CVs.insert {
@@ -50,6 +55,7 @@ object CVModel {
                 it[spokenLanguages] = languages
                 it[country] = theCountry
                 it[education] = theEducation
+                it[ownerId] = ownerId__
             }
         }
     }
@@ -92,6 +98,39 @@ object CVModel {
             }
 
             /* return */ cvsList
+        }
+    }
+
+    fun update(
+        skills_: String = "",
+        languages_: String = "",
+        theCountry_: String = "",
+        theEducation_: String = "",
+        ownerId_: Int
+    ) {
+        transaction {
+            CVs
+                .update({ CVs.ownerId eq ownerId_ }) {
+                    fun updateIfNotEmpty(column: Column<String>, field: String) {
+                        if (field.isNotEmpty())
+                            it[column] = field
+                    }
+
+                    updateIfNotEmpty(CVs.keySkills, skills_)
+                    updateIfNotEmpty(CVs.spokenLanguages, languages_)
+                    updateIfNotEmpty(CVs.country, theCountry_)
+                    updateIfNotEmpty(CVs.education, theEducation_)
+
+                }
+        }
+    }
+
+    fun get(CVId: Int): CV? {
+        return transaction {
+            CVs
+                .select { CVs.id eq CVId }
+                .map { CVs.toObject(it) }
+                .firstOrNull()
         }
     }
 }
